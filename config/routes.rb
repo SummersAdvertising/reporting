@@ -1,14 +1,20 @@
-Reporting::Application.routes.draw do
-
+Reporting::Application.routes.draw do
   devise_for :users
+  resources :tickets, :except => ["new"]
+  resources :topics
+
+  match "/getUsers" => "tickets#getUsers"
+  match "/test" => "tickets#test"
 
   namespace :admin do
   	root :to => 'tickets#index'
   	resources :tickets
+
+    match "/users" => "users#index"
+    
   end
-  
-  
-  root :to => "pages#index"
+
+  root :to => "tickets#index"
   
   
   # The priority is based upon order of creation:

@@ -1,10 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reporting</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="Robots" content="index,follow"/>
+  <meta http-equiv="content-language" content="zh-TW" />
+  <title>夏天廣告回報系統</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <link rel="stylesheet" media="screen and (max-width: 543px)" href="/assets/front/mobile"/>
+  <link rel="stylesheet" media="screen and (min-width: 544px) and (max-width: 896px)" href="/assets/front/tablet" />
+  <link rel="stylesheet" media="screen and (min-width: 897px)" href="/assets/front/desktop"/>
+  <link rel="StyleSheet" href="/plugin/tagit/css/jquery.tagedit.css" type="text/css" media="all"/>
+
   <%= javascript_include_tag "application" %>
+  <script type="text/javascript" src="/plugin/tagit/js/jquery.autoGrowInput.js"></script>
+  <script type="text/javascript" src="/plugin/tagit/js/jquery.tagedit.js"></script>
   <%= csrf_meta_tags %>
+
+  <script>
+  $(document).ready(function(){
+  	$('#add-button').click(function(){
+  		$('#topic-add').stop().toggle(500,function(){
+  			$('#del-button').addClass('dark')
+  		});	
+  	})
+
+  	$('#del-button').click(function(){
+  		$(this).hide();
+  		$('#check-button').show();
+  		$('#add-button').addClass('dark');
+  		$('.del').stop().fadeIn(500)
+  	})
+
+  	$('#check-button').hide().click(function(){
+		$(this).hide();
+		$('#del-button').show();
+		$('#add-button').removeClass('dark');
+		$('.del').stop().fadeOut(500)	
+	})
+	
+	$('#aside-ctrl').click(function(){
+		$('aside').animate({left:0});
+		$('article').addClass('mask')
+	})
+	
+	$('#tool-ctrl')	.click(function(){
+		$('#tool-list').fadeIn('slow');	
+	})
+  });
+</script>
+<script>
+$(document).ready(function(){
+	$(function(){	
+		var _showTab = 0;
+		var $defaultLi = $('.tab li').eq(_showTab).addClass('active');
+		$($defaultLi.find('a').attr('href')).siblings().hide();
+ 		$('.tab li').click(function() {		
+			var $this = $(this),
+			_clickTab = $this.find('a').attr('href');		
+			$this.addClass('active').siblings('.active').removeClass('active');		
+			$(_clickTab).stop(false, true).fadeIn().siblings().hide(); 
+			return false;
+		}).find('a').focus(function(){
+			this.blur();
+		});
+	});
+	
+	$('.tab-content').hide()
+	$('.option .tab').hide()
+	$('#main-text').click(function(){
+		$('.option .tab').fadeIn()		
+	})
+	$('.option .tab a').click(function(){
+		$('.tab-content').fadeIn()		
+	})
+
+	$("#wrapper aside").css("height", $("#msg-list").outerHeight()+50);
+});
+</script>
 </head>
 <body>
 

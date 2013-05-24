@@ -1,0 +1,101 @@
+<style>
+  .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+</style>
+
+<% if (user_signed_in?) %>
+<p>hi, <%= current_user.username %></p>
+<p><%= link_to 'log out', destroy_user_session_path, method: :delete %> <%= link_to "Change your password", edit_user_registration_path %></p>
+<% else %>
+<p><%= link_to 'log in', new_user_session_path %> <%= link_to 'new user', new_user_registration_path %></p>
+
+<% end %>
+
+<%= link_to "topics" ,topics_path %> / <%= link_to "all users" ,admin_users_path %>
+<hr />
+<div>
+	<h5>tickets</h5>
+	<table>
+		<tr>
+			<th>Description</th>
+			<th>priority</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<% @tickets.each do |ticket| %>
+  <tr>
+    <td><%= ticket.description %></td>
+    <td><%= ticket.priority %></td>
+    <td><%= link_to 'Show', ticket_path(ticket) %></td>
+    <td><%= link_to 'Destroy', ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+<div>
+	<h5>new ticket</h5>
+	<%= form_for(@ticket) do |f| %>
+	<div class="field">
+		<%= f.label :description %>
+		<%= f.text_field :description %>
+	</div>
+	<div class="field">
+		<%= f.label :topic %>
+		<%= f.text_field :topic %>
+	</div>
+	<div class="field">
+		<%= f.label :priority %>
+		<%= f.select(:priority, options_for_select([['-Priority-', ''], ['high', 'high'], ['medium', 'medium'], ['low', 'low']])) %>
+	</div>
+  <div class="field">
+    <label>cc</label>
+    <input id="userAC" type="text" name="reporter[]" value="" class="tag" placeholder="type name here" />
+  </div>
+	<div class="actions">
+		<%= f.submit %>
+	</div>
+<% end %>
+</div>
+
+<script type="text/javascript">
+$(function() {
+    var availableTags = <%=raw @topics %>;
+
+    $("#ticket_topic").autocomplete({
+    	source: availableTags,
+    	minLength: 0
+    })
+    .focus(function() {
+    	$(this).autocomplete('search', $(this).val())
+    });
+
+    $.ajax({
+      async: false,
+      url: "/getUsers",
+      dataType: 'json',
+      complete: function (XMLHttpRequest, textStatus) {
+        var ccList = $.parseJSON(XMLHttpRequest.responseText);
+
+        $("#userAC").tagedit({
+          autocompleteURL: ccList,
+          allowEdit: false,
+          texts: {removeLinkTitle: "" }
+        });
+      }
+    });
+
+    
+
+  });
+
+</script>
