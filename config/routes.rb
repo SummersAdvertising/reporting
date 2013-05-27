@@ -1,16 +1,22 @@
 Reporting::Application.routes.draw do
-  devise_for :users
+  devise_for :users,
+  :controllers => {
+    :sessions => "sessions"
+  }
   resources :tickets, :except => ["new"]
+  get 'tickets/topics/:id' => "tickets#topic", :as => "ticket_topic"
+  match 'tickets/topics/:id' => "tickets#topicDel", :as => "ticket_topic", :via => "delete"
+
   resources :topics
 
-  match "/getUsers" => "tickets#getUsers"
-  match "/test" => "tickets#test"
+  get "/getUsers" => "tickets#getUsers"
+  get "/test" => "tickets#test"
 
   namespace :admin do
   	root :to => 'tickets#index'
   	resources :tickets
 
-    match "/users" => "users#index"
+    get "/users" => "users#index"
     
   end
 

@@ -73,7 +73,8 @@ $(function() {
 
     $("#ticket_topic").autocomplete({
     	source: availableTags,
-    	minLength: 0
+    	minLength: 0,
+      change: function (event, ui) { $(this).val(ui.item.id);; }
     })
     .focus(function() {
     	$(this).autocomplete('search', $(this).val())

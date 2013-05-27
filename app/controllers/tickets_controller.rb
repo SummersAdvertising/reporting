@@ -12,7 +12,7 @@ class TicketsController < ApplicationController
     #topics for autocomplete
     @topics = Array.new
     Topic.all.each do |topic|
-      @topics.push(topic.name)
+      @topics.push({:id => topic.id, :label => topic.name})
     end
 
     @topics = @topics.to_json
@@ -23,6 +23,28 @@ class TicketsController < ApplicationController
   end
 
   def index
+    if(params[:order] == "createDESC")
+      @tickets = Ticket.find(:all,
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
+            :select => "tickets.*, topics.name, topics.color",
+            :order => "created_at ASC")
+    else
+      @tickets = Ticket.find(:all,
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
+            :select => "tickets.*, topics.name, topics.color",
+            :order => "(case priority
+        when 'high' then 0
+        when 'medium' then 1
+        when 'low' then 2
+        else 3
+        end), deadline ASC, created_at ASC")
+    end
+
+    @topics = Topic.all
+    @subscribes = Subscribe.find(:all,
+            :conditions => {:user_id => current_user.id},
+            :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
+            :select => "subscribes.*, topics.name, topics.count")
     
   end
 
@@ -90,6 +112,25 @@ class TicketsController < ApplicationController
     respond_to do |format|
       format.json { render json: @users}
     end
+    
+  end
+
+  def topic
+    @tickets = Ticket.find(:all,
+            :conditions => {:topic_id => params[:id]},
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
+            :select => "tickets.*, topics.name, topics.color",
+            :order => "created_at ASC")
+
+    @topics = Topic.all
+    @subscribes = Subscribe.find(:all,
+            :conditions => {:user_id => current_user.id},
+            :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
+            :select => "subscribes.*, topics.name, topics.count")
+    
+  end
+  def topicDel
+    redirect_to request.referer
     
   end
 end

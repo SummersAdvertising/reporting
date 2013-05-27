@@ -9,4 +9,6 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
   validates_presence_of :username
   # attr_accessible :title, :body
+  has_many :subscribes
+  has_many :topics, :through => :subscribes
 end

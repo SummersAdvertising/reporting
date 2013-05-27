@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130524064200) do
+ActiveRecord::Schema.define(:version => 20130527072147) do
 
   create_table "logs", :force => true do |t|
     t.string   "actor"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(:version => 20130524064200) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "subscribes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "topic_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "subscribes", ["user_id"], :name => "index_subscribes_on_user_id"
 
   create_table "tags", :force => true do |t|
     t.string   "name"
@@ -39,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20130524064200) do
     t.string   "reporter"
     t.text     "treatment"
     t.datetime "close_time"
-    t.string   "topic"
+    t.string   "topic_id"
     t.string   "status"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -49,10 +58,10 @@ ActiveRecord::Schema.define(:version => 20130524064200) do
   create_table "topics", :force => true do |t|
     t.string   "name"
     t.string   "status"
-    t.integer  "count"
+    t.integer  "count",      :default => 0
     t.string   "color"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "tracks", :force => true do |t|

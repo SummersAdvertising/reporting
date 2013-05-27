@@ -75,14 +75,13 @@ $(document).ready(function(){
 		$('.tab-content').fadeIn()		
 	})
 
-	$("#wrapper aside").css("height", $("#msg-list").outerHeight()+50);
+	var adjustHeight = $("article").outerHeight();
+	var windowHeight = $(window).height();
+	$("#wrapper aside").css("height", adjustHeight>windowHeight? adjustHeight:windowHeight );
 });
 </script>
 </head>
 <body>
-
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
 
 <%= yield %>
 

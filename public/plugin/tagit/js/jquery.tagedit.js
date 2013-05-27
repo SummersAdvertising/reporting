@@ -179,7 +179,7 @@
 									html = '<li class="tagedit-listelement tagedit-listelement-old">';
 									html += '<span dir="'+options.direction+'">' + $(this).val() + '</span>';
 									var name = oldValue? baseName + '['+id+options.addedPostfix+']' : baseName + '[]';
-									html += '<input type="hidden" name="'+name+'" value="'+id+'" />';
+									html += '<input type="hidden" name="'+name+'" value="'+$(this).val()+'" />';
 									html += '<a class="tagedit-close" title="'+options.texts.removeLinkTitle+'">x</a>';
 									html += '</li>';
 

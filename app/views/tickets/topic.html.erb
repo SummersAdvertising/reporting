@@ -61,7 +61,7 @@
       <div class="ticket">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td class="del"><%= link_to '', ticket_topic_path(subscribe), method: :delete %></td>
+            <td class="del"><%= link_to '', ticket_topic_path(subscribe), method: :delete %></a></td>
             <td class="topic-name"><a href="<%= ticket_topic_path(subscribe.topic_id) %>"><%= subscribe.name %></a></td>
             <td class="notice"><span><%= subscribe.count %></span></td>
           </tr>
