@@ -10,6 +10,7 @@ Reporting::Application.routes.draw do
   resources :topics
 
   get "/getUsers" => "tickets#getUsers"
+  get "/getTopics" => "tickets#getTopics"
   get "/test" => "tickets#test"
 
   namespace :admin do

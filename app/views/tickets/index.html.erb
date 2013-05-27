@@ -158,7 +158,7 @@
             </ul>
             <!--tag-->
             <p><%= ticket.description %></p>
-            <div class="cc">標記<a href="#">toto</a> ，共有<a href="#">0</a>則<a href="#">留言</a></div>
+            <div class="cc">標記<a href="#">toto</a> ，共有<a href="#"><%= ticket.tracks.count %></a>則<a href="#">留言</a></div>
           </div>
         </div>
         <!--content--> 
@@ -168,3 +168,25 @@
     </section>
   </article>
 </section>
+<script type="text/javascript">
+$("#topic-text").focus(function(){
+  $.ajax({
+      async: false,
+      url: "/getTopics",
+      dataType: 'json',
+      complete: function (XMLHttpRequest, textStatus) {
+        var topics = $.parseJSON(XMLHttpRequest.responseText);
+
+        $("#topic-text").unbind().autocomplete({
+          source: topics,
+          minLength: 0,
+          //change: function (event, ui) { $(this).val(ui.item.id);; }
+        })
+        .focus(function() {
+          $(this).autocomplete('search', $(this).val())
+        })
+        .trigger('focus');
+      }
+    });
+});
+</script>

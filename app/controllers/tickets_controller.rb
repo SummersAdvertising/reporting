@@ -40,7 +40,6 @@ class TicketsController < ApplicationController
         end), deadline ASC, created_at ASC")
     end
 
-    @topics = Topic.all
     @subscribes = Subscribe.find(:all,
             :conditions => {:user_id => current_user.id},
             :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
@@ -111,6 +110,19 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       format.json { render json: @users}
+    end
+    
+  end
+
+  def getTopics
+    @topics = Array.new
+
+    Topic.all.each do |topic|
+      @topics.push( {"id" => topic.id, "value" => topic.name} )
+    end
+
+    respond_to do |format|
+      format.json { render json: @topics}
     end
     
   end
