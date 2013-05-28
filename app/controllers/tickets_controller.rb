@@ -134,7 +134,6 @@ class TicketsController < ApplicationController
             :select => "tickets.*, topics.name, topics.color",
             :order => "created_at ASC")
 
-    @topics = Topic.all
     @subscribes = Subscribe.find(:all,
             :conditions => {:user_id => current_user.id},
             :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
@@ -143,6 +142,17 @@ class TicketsController < ApplicationController
   end
   def topicDel
     redirect_to request.referer
-    
+  end
+
+  def query
+    @tickets = Ticket.find(:all,
+            :conditions => ["description like ?", params[:query] + "%"],
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
+            :select => "tickets.*, topics.name, topics.color",
+            :order => "created_at ASC")
+    @subscribes = Subscribe.find(:all,
+            :conditions => {:user_id => current_user.id},
+            :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
+            :select => "subscribes.*, topics.name, topics.count")
   end
 end

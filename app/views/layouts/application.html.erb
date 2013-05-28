@@ -82,8 +82,106 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<section id="wrapper">
+  <aside>
+    <section id="search">
+      <div>
+        <input name="" type="text" id="search-text">
+        <input name="" type="button" id="search-button">
+      </div>
+    </section>
+    <!--search-->
+    <section id="info"> <a id="info-edit" href="#"><img src="/images/edit.png"></a>
+      <div class="photo">
+        <div class="img-border"><img src="/images/avator.jpg"></div>
+      </div>
+      <div id="account"><span class="name"><%= current_user.username %></span><br>
+        <span class="email"><%= current_user.email %></span></div>
+    </section>
+    <!--info-->
+    <section id="topic">
+      <h6>最新動態</h6>
+      <div class="ticket">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="topic-name"><a href="#">近期回報</a></td>
+            <td class="notice"><span>2</span></td>
+          </tr>
+        </table>
+      </div>
+      <div class="ticket">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="topic-name"><a href="#">最新留言</a></td>
+            <td class="notice"><span>1</span></td>
+          </tr>
+        </table>
+      </div>
+      <div class="ticket">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="topic-name"><a href="/tickets">依優先排序</a></td>
+            <td class="notice"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="ticket">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="topic-name"><a href="/tickets?order=createDESC">依時間排序</a></td>
+            <td class="notice"></td>
+          </tr>
+        </table>
+      </div>
+      <h6>我的訂閱
+        <div class="tool"><a id="check-button">check</a><a id="del-button">delete</a><a id="add-button">Add</a></div>
+      </h6>
+      <div id="topic-add">
+        <input name="" type="text" id="topic-text">
+        <input name="" type="button" id="topic-button" value="增加">
+      </div>
+      <% @subscribes.each do |subscribe| %>
+      <div class="ticket">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="del"><%= link_to '', ticket_topic_path(subscribe), method: :delete %></td>
+            <td class="topic-name"><a href="<%= ticket_topic_path(subscribe.topic_id) %>"><%= subscribe.name %></a></td>
+            <td class="notice"><span><%= subscribe.count %></span></td>
+          </tr>
+        </table>
+      </div>
+      <% end %>
+    </section>
+    <!--topic--> 
+  </aside>
+<article>
+    <header>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td id="aside-ctrl"><a href="#"><img src="/images/nav.png"></a></td>
+          <td><h1>夏天廣告回報系統</h1></td>
+          <td class="tool"><a href="#" id="tool-ctrl"><img src="/images/set.png"></a>
+            <div id="tool-list"><%= link_to (image_tag("/images/logout.png")+"登出"), destroy_user_session_path, method: :delete %> <%= link_to (image_tag("/images/tag.png")+"專案管理") ,topics_path %> <%= link_to (image_tag("/images/user.png")+"使用者列表") ,admin_users_path, :id => "user-list" %></div></td>
+        </tr>
+      </table>
+    </header>
 
 <%= yield %>
+  </article>
+</section>
 
+<script type="text/javascript">
+$("#search-button").click(function(){
+  var queryString = $("#search-text").val();
+  if (queryString) { // check value is not empty
+    document.location.href = "/tickets/query/" + queryString;
+  }
+});
+$("#search-text").keydown(function(event){
+  if (event.keyCode == 13){
+    $("#search-button").trigger('click');
+  }
+});
+</script>
 </body>
 </html>

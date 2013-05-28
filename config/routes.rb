@@ -7,8 +7,11 @@ Reporting::Application.routes.draw do
   get 'tickets/topics/:id' => "tickets#topic", :as => "ticket_topic"
   match 'tickets/topics/:id' => "tickets#topicDel", :as => "ticket_topic", :via => "delete"
 
+  get 'tickets/query/:query' => "tickets#query", :as => "ticket_query"
+
   resources :topics
 
+  #get resource for autocomplete
   get "/getUsers" => "tickets#getUsers"
   get "/getTopics" => "tickets#getTopics"
   get "/test" => "tickets#test"

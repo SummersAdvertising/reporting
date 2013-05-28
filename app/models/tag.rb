@@ -3,7 +3,8 @@ class Tag < ActiveRecord::Base
   
   validates_presence_of :name
   
-  # has_and_belongs_to_many :tickets
+  has_many :tickettags
+  has_many :tickets, :through => :tickettags
   
   before_save :set_default
   
