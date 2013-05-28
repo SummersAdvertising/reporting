@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree ./front
+//= require jquery.ui.datepicker
 //= require jquery.ui.autocomplete

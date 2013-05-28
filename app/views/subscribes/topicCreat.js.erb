@@ -1,0 +1,8 @@
+var addSub = $('<div class="ticket" data-del="<%= @subscribe.id  %>">');
+
+$("#topic").append(
+	addSub.html('<table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="del"><a href="/tickets/topics/<%= @subscribe.id  %>" data-method="delete" data-remote="true" rel="nofollow"></a></td><td class="topic-name"><a href="/tickets/topics/<%= @subscribe.topic_id  %>"><%= @subscribe.topic_name  %></a></td><td class="notice"></td></tr></tbody></table>')
+	.css("position", "relative")
+	.css("left", "-"+delSub.outerWidth()+"px")
+	.animate({left: 0}, 500)
+);

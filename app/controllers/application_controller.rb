@@ -4,6 +4,17 @@ class ApplicationController < ActionController::Base
   def check_authorization
     if (!user_signed_in?)
     	redirect_to new_user_session_path
+
+    else
+    	get_user_subscribe
     end
+  end
+  def get_user_subscribe
+  	
+    @subscribes = Subscribe.find(:all,
+            :conditions => {:user_id => current_user.id},
+            :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
+            :select => "subscribes.*, topics.name, topics.count")
+  	
   end
 end

@@ -3,13 +3,15 @@ Reporting::Application.routes.draw do
   :controllers => {
     :sessions => "sessions"
   }
+
   resources :tickets, :except => ["new"]
-  get 'tickets/topics/:id' => "tickets#topic", :as => "ticket_topic"
-  match 'tickets/topics/:id' => "tickets#topicDel", :as => "ticket_topic", :via => "delete"
+  resources :topics
+
+  #routes for subscribing topics
+  get 'tickets/topics/:id' => "subscribes#topicShow", :as => "ticket_topic"
+  match 'tickets/topics/:id' => "subscribes#topicDestroy", :as => "ticket_topic", :via => "delete"
 
   get 'tickets/query/:query' => "tickets#query", :as => "ticket_query"
-
-  resources :topics
 
   #get resource for autocomplete
   get "/getUsers" => "tickets#getUsers"

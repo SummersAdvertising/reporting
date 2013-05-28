@@ -1,0 +1,25 @@
+<% @tickets.each do |ticket| %>
+<div class="box <%= "highlight" if (ticket.priority == "high")%>">
+  <div class="avator">
+    <div class="img-border"> <img src="/images/avator.jpg"> </div>
+    <div class="name"><%= ticket.reporter %></div>
+  </div>
+  <!--avator-->
+  <div class="content">
+    <span class="time"><%= ticket.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+    <div class="text">
+      <ul class="tag">
+        <li class="tag-topic" style="background:<%= ticket.color if(ticket.color) %>"><%= ticket.name %></li>
+        <% ticket.tags.each do |tag| %>
+        <li><%= tag.name %></li>
+        <% end %>
+      </ul>
+      <!--tag-->
+      <p><%= ticket.description %></p>
+      <div class="cc">標記<a href="#">toto</a> ，共有<a href="<%= ticket_path(ticket) %>"><%= ticket.tracks.count %></a>則留言</div>
+    </div>
+  </div>
+  <!--content--> 
+</div>
+<!--box-->
+<% end %>

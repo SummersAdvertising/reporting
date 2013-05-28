@@ -13,4 +13,5 @@
  *= require ./front/default.css.scss
 
  *= require jquery.ui.autocomplete
+ *= require jquery.ui.datepicker
  */

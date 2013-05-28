@@ -6,7 +6,7 @@ class Tag < ActiveRecord::Base
   has_many :tickettags
   has_many :tickets, :through => :tickettags
   
-  before_save :set_default
+  #before_save :set_default
   
 private
 	def set_default
