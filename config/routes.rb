@@ -6,16 +6,17 @@ Reporting::Application.routes.draw do
 
   resources :tickets, :except => ["new"]
   resources :topics
+  resources :subscribes, :only => ["create", "destroy"]
 
   #routes for subscribing topics
   get 'tickets/topics/:id' => "subscribes#topicShow", :as => "ticket_topic"
-  match 'tickets/topics/:id' => "subscribes#topicDestroy", :as => "ticket_topic", :via => "delete"
 
   get 'tickets/query/:query' => "tickets#query", :as => "ticket_query"
 
   #get resource for autocomplete
   get "/getUsers" => "tickets#getUsers"
   get "/getTopics" => "tickets#getTopics"
+  get "/getTags" => "tickets#getTags"
   get "/test" => "tickets#test"
 
   namespace :admin do

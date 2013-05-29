@@ -1,4 +1,7 @@
 <section id="msg-list">
+  <form>
+    <input id="tagAC" type="text" name="tag[]" value="" />
+  </form>
   <%= form_for(@ticket) do |f| %>
   <section id="post">
     <div class="main">
@@ -12,40 +15,26 @@
 
     <div class="option">
       <section class="tab-content">
+
         <div id="post-tag">
+
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td class="topic" width="19%">
-                <input type="text" id="ticketTopic" style="display:none;">
-                <%= f.text_field :topic, :placeholder => "專案名稱" %>
+                <input type="text" id="ACTicketTopic" placeholder="專案名稱">
+                <input type="text" id="ticketTopic" name="topic" style="display:none;">
               </td>
               <td width="1%">&nbsp;</td>
               <td class="tagmod" width="80%">
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="150">
-                      <div class="tag">首頁<a><img src="/images/tag-del.png"></a></div>
-                      <div class="tag">最新消息<a><img src="/images/tag-del.png"></a></div>
-                    </td>
-                    <td><input type="text" placeholder="添加標籤">
-                    </td>
-                  </tr>
-                </table>
+                
               </td>
             </tr>
           </table>
         </div>
 
         <div id="post-cc">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="tagmod" width="150">
-                <div class="tag">AW<a><img src="/images/tag-del.png"></a></div>
-                <div class="tag">limin<a><img src="/images/tag-del.png"></a></div>
-              </td>
-              <td class="tagmod"><input name="" type="text" placeholder="想要把誰標記進來？"></td>
-            </tr>
-          </table>
+          <input id="userAC" type="text" name="cc[]" value="" />
+
         </div>
         
         <div id="post-dl">
@@ -95,6 +84,4 @@ $( "#ticket_deadline" ).change(function(){
 $("#main-send").click(function(){
   $("#new_ticket").submit();
 });
-
-
 </script>

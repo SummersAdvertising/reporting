@@ -7,7 +7,7 @@ class SubscribesController < ApplicationController
   		:order => "created_at ASC")
   end
 
-  def topicDestroy
+  def destroy
     #redirect_to request.referer
     @subscribe = Subscribe.find(params[:id])
     respond_to do |format|
@@ -16,10 +16,10 @@ class SubscribesController < ApplicationController
     end
   end
 
-  def topicCreate
+  def create
   	exit
   	@subscribe = Subscribe.new
-  	@subscribe.user_id = current_user.id
+  	@subscribe.user_id = current_user.username
 
   	respond_to do |format|
       format.json { render json: @subscribe}

@@ -67,7 +67,7 @@ class TicketsController < ApplicationController
         format.html { redirect_to root_path, notice: 'ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to root_path }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
@@ -109,6 +109,21 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       format.json { render json: @users}
+    end
+    
+  end
+
+  def getTags
+    @tags = Array.new
+
+    Tag.all.each do |tag|
+      @tag = {"id" => tag.id, "label" => tag.name, "value" => tag.name}
+
+      @tags.push(@tag)
+    end
+
+    respond_to do |format|
+      format.json { render json: @tags}
     end
     
   end

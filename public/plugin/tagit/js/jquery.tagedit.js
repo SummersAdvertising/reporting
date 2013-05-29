@@ -51,6 +51,7 @@
 		*/
 		options = $.extend(true, {
 			// default options here
+			allowSelfNew: true,
 			autocompleteURL: null,
 			deletedPostfix: '-d',
 			addedPostfix: '-a',
@@ -62,7 +63,7 @@
 			animSpeed: 500,
 			autocompleteOptions: {
 				select: function( event, ui ) {
-					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id]);
+					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id, ui.item.label]);
 					return false;
 				}
 			},
@@ -74,7 +75,8 @@
 				deleteLinkTitle: 'Delete this tag from database.',
 				deleteConfirmation: 'Are you sure to delete this entry?',
 				deletedElementTitle: 'This Element will be deleted.',
-				breakEditLinkTitle: 'Cancel'
+				breakEditLinkTitle: 'Cancel',
+				notInList: "Your input doesn't exist in the list."
 			}
 		}, options || {});
 
@@ -161,7 +163,7 @@
 						$(this).autoGrowInput({comfortZone: 150, minWidth: 15, maxWidth: 20000});
 
 						// Event ist triggert in case of choosing an item from the autocomplete, or finish the input
-						$(this).bind('transformToTag', function(event, id) {
+						$(this).bind('transformToTag', function(event, id, value) {
 							var oldValue = (typeof id != 'undefined' && id.length > 0);
 
 							var checkAutocomplete = oldValue == true? false : true;
@@ -179,7 +181,7 @@
 									html = '<li class="tagedit-listelement tagedit-listelement-old">';
 									html += '<span dir="'+options.direction+'">' + $(this).val() + '</span>';
 									var name = oldValue? baseName + '['+id+options.addedPostfix+']' : baseName + '[]';
-									html += '<input type="hidden" name="'+name+'" value="'+$(this).val()+'" />';
+									html += '<input type="hidden" name="'+name+'" value="'+ value +'" />';
 									html += '<a class="tagedit-close" title="'+options.texts.removeLinkTitle+'">x</a>';
 									html += '</li>';
 
@@ -220,9 +222,16 @@
 						.keypress(function(event) {
 							var code = event.keyCode > 0? event.keyCode : event.which;
 							if($.inArray(code, options.breakKeyCodes) > -1) {
-								if($(this).val().length > 0 && $('ul.ui-autocomplete #ui-active-menuitem').length == 0) {
+								if(options.allowSelfNew){
+									if($(this).val().length > 0 && $('ul.ui-autocomplete #ui-active-menuitem').length == 0) {
 									$(this).trigger('transformToTag');
 								}
+								}
+								else{
+									alert(options.texts.notInList);
+									$(this).val("");
+								}
+								
 							event.preventDefault();
 							return false;
 							}
@@ -407,8 +416,9 @@
             var compareValue = options.checkNewEntriesCaseSensitive == true? value : value.toLowerCase();
 
 			var isNew = true;
-			elements.find('li.tagedit-listelement-old input:hidden').each(function() {
-                var elementValue = options.checkNewEntriesCaseSensitive == true? $(this).val() : $(this).val().toLowerCase();
+			elements.find('li.tagedit-listelement-old span').each(function() {
+                var elementValue = options.checkNewEntriesCaseSensitive == true? $(this).text() : $(this).text().toLowerCase();
+                
 				if(elementValue == compareValue) {
 					isNew = false;
 				}

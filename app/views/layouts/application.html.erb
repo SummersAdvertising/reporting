@@ -86,7 +86,8 @@
         </h6>
 
         <div id="topic-add">
-          <form accept-charset="UTF-8" action="/tickets" method="post">
+         <!-- data-remote="true" -->
+          <form accept-charset="UTF-8" action="/subscribes" method="post" id="topicForm">
             <div style="margin:0;padding:0;display:inline">
               <input name="utf8" type="hidden" value="✓">
               <input name="authenticity_token" type="hidden" value="MtCsP1oggzzLksDJ4RZHdtPlEjiJNkbdDj3Gmmso15w=">
@@ -102,7 +103,7 @@
         <div class="ticket" data-del="<%= subscribe.id %>">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="del"><%= link_to '', ticket_topic_path(subscribe), :method => :delete, :remote => true %></td>
+              <td class="del"><%= link_to '', subscribe_path(subscribe), :method => :delete, :remote => true %></td>
               <td class="topic-name"><a href="<%= ticket_topic_path(subscribe.topic_id) %>"><%= subscribe.name %></a></td>
               <td class="notice"><% if subscribe.count>0 %><span><%= subscribe.count %></span><% end %></td>
             </tr>
@@ -154,7 +155,7 @@ $("#search-text").keydown(function(event){
 });
 
 
-/* autocomplete subscribing topic */
+/* autocomplete : subscribing topic */
 $.ajax({
   async: false,
   url: "/getTopics",
@@ -171,15 +172,80 @@ $.ajax({
       $(this).autocomplete('search', $(this).val())
     })
 
-    $("#ticketTopic").autocomplete({
+    $("#ACTicketTopic").autocomplete({
       source: topics,
       minLength: 0,
-      change: function (event, ui) { $("#ticket_topic").val(JSON.stringify(ui.item)); }
+      change: function (event, ui) {
+        if ( !ui.item ) {
+          for(var item in topics){
+            if($(this).val() == topics[item].value)
+            {
+              $("#ticketTopic").val(JSON.stringify({id: topics[item].id, value: topics[item].value})); 
+              break;
+            }
+            if(item == topics.length-1){
+              alert("該專案不存在，請先新增新專案。");
+              $(this).val("");
+            }
+          }
+
+        }
+        else{
+          $("#ticketTopic").val(JSON.stringify(ui.item)); 
+        }
+
+        
+      }
     })
     .focus(function() {
       $(this).autocomplete('search', $(this).val())
     })
   }
+});
+
+/* autocomplete : new ticket */
+$.ajax({
+  async: false,
+  url: "/getTags",
+  dataType: 'json',
+  complete: function (XMLHttpRequest, textStatus) {
+    var tagList = $.parseJSON(XMLHttpRequest.responseText);
+
+    $("#tagAC").tagedit({
+      autocompleteURL: tagList,
+      allowEdit: false,
+      allowSelfNew: false,
+      texts: {
+        removeLinkTitle: "",
+        notInList: "無法標記不存在的使用者。"
+      }
+    });
+  }
+});
+// $.ajax({
+//   async: false,
+//   url: "/getUsers",
+//   dataType: 'json',
+//   complete: function (XMLHttpRequest, textStatus) {
+//     var ccList = $.parseJSON(XMLHttpRequest.responseText);
+
+//     $("#userAC").tagedit({
+//       autocompleteURL: ccList,
+//       allowEdit: false,
+//       allowSelfNew: false,
+//       texts: {
+//         removeLinkTitle: "",
+//         notInList: "無法標記不存在的使用者。"
+//       }
+//     });
+//   }
+// });
+
+
+
+/* new ticket */
+$("#topic-button").click(function(){
+  $("#topicForm").submit();
 });
 </script>
 
