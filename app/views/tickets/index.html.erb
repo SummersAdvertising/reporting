@@ -1,7 +1,4 @@
 <section id="msg-list">
-  <form>
-    <input id="tagAC" type="text" name="tag[]" value="" />
-  </form>
   <%= form_for(@ticket) do |f| %>
   <section id="post">
     <div class="main">
@@ -22,11 +19,11 @@
             <tr>
               <td class="topic" width="19%">
                 <input type="text" id="ACTicketTopic" placeholder="專案名稱">
-                <input type="text" id="ticketTopic" name="topic" style="display:none;">
+                <input type="text" id="ticketTopic" name="ticket[topic_id]" style="display:none;">
               </td>
               <td width="1%">&nbsp;</td>
               <td class="tagmod" width="80%">
-                
+                <input id="tagAC" type="text" name="tag[]" value="" />
               </td>
             </tr>
           </table>

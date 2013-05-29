@@ -58,12 +58,20 @@ class TicketsController < ApplicationController
   end
 
   def create
-    exit
     @ticket = Ticket.new(params[:ticket])
     @ticket.reporter = current_user.id
+    @ticket.cc = params[:cc].to_json
 
     respond_to do |format|
       if @ticket.save
+        params[:tag].each do |tag|
+          @tickettag = Tickettag.new
+          @tickettag.ticket_id = @ticket.id
+          @tickettag.tag_id = tag
+
+          @tickettag.save
+        end
+
         format.html { redirect_to root_path, notice: 'ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
@@ -117,7 +125,7 @@ class TicketsController < ApplicationController
     @tags = Array.new
 
     Tag.all.each do |tag|
-      @tag = {"id" => tag.id, "label" => tag.name, "value" => tag.name}
+      @tag = {"id" => tag.id, "label" => tag.name, "value" => tag.id}
 
       @tags.push(@tag)
     end

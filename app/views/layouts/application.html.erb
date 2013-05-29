@@ -191,7 +191,7 @@ $.ajax({
 
         }
         else{
-          $("#ticketTopic").val(JSON.stringify(ui.item)); 
+          $("#ticketTopic").val(ui.item.id); 
         }
 
         
@@ -213,33 +213,35 @@ $.ajax({
 
     $("#tagAC").tagedit({
       autocompleteURL: tagList,
+      tagShowValue: false,
       allowEdit: false,
-      allowSelfNew: false,
       texts: {
         removeLinkTitle: "",
-        notInList: "無法標記不存在的使用者。"
+        notInList: "無法標記不存在的使用者。",
+        placeholder: "添加標籤"
       }
     });
   }
 });
-// $.ajax({
-//   async: false,
-//   url: "/getUsers",
-//   dataType: 'json',
-//   complete: function (XMLHttpRequest, textStatus) {
-//     var ccList = $.parseJSON(XMLHttpRequest.responseText);
+$.ajax({
+  async: false,
+  url: "/getUsers",
+  dataType: 'json',
+  complete: function (XMLHttpRequest, textStatus) {
+    var ccList = $.parseJSON(XMLHttpRequest.responseText);
 
-//     $("#userAC").tagedit({
-//       autocompleteURL: ccList,
-//       allowEdit: false,
-//       allowSelfNew: false,
-//       texts: {
-//         removeLinkTitle: "",
-//         notInList: "無法標記不存在的使用者。"
-//       }
-//     });
-//   }
-// });
+    $("#userAC").tagedit({
+      autocompleteURL: ccList,
+      allowEdit: false,
+      allowSelfNew: false,
+      texts: {
+        removeLinkTitle: "",
+        notInList: "無法標記不存在的使用者。",
+        placeholder: "想要把誰標記進來？"
+      }
+    });
+  }
+});
 
 
 

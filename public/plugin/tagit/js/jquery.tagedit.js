@@ -51,6 +51,8 @@
 		*/
 		options = $.extend(true, {
 			// default options here
+
+			tagShowValue: true,
 			allowSelfNew: true,
 			autocompleteURL: null,
 			deletedPostfix: '-d',
@@ -63,7 +65,7 @@
 			animSpeed: 500,
 			autocompleteOptions: {
 				select: function( event, ui ) {
-					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id, ui.item.label]);
+					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id, ui.item.label, ui.item.value]);
 					return false;
 				}
 			},
@@ -76,7 +78,8 @@
 				deleteConfirmation: 'Are you sure to delete this entry?',
 				deletedElementTitle: 'This Element will be deleted.',
 				breakEditLinkTitle: 'Cancel',
-				notInList: "Your input doesn't exist in the list."
+				notInList: "Your input doesn't exist in the list.",
+				placeholder: ""
 			}
 		}, options || {});
 
@@ -151,7 +154,7 @@
 			// put an input field at the End
 			// Put an empty element at the end
 			html = '<li class="tagedit-listelement tagedit-listelement-new">';
-			html += '<input type="text" name="'+baseName+'[]" value="" id="tagedit-input" disabled="disabled" class="tagedit-input-disabled" dir="'+options.direction+'" placeholder="想要把誰標記進來？"/>';
+			html += '<input type="text" name="'+baseName+'[]" value="" id="tagedit-input" disabled="disabled" class="tagedit-input-disabled" dir="'+options.direction+'" placeholder="'+options.texts.placeholder+'"/>';
 			html += '</li>';
 			html += '</ul>';
 
@@ -163,7 +166,7 @@
 						$(this).autoGrowInput({comfortZone: 150, minWidth: 15, maxWidth: 20000});
 
 						// Event ist triggert in case of choosing an item from the autocomplete, or finish the input
-						$(this).bind('transformToTag', function(event, id, value) {
+						$(this).bind('transformToTag', function(event, id, label, value) {
 							var oldValue = (typeof id != 'undefined' && id.length > 0);
 
 							var checkAutocomplete = oldValue == true? false : true;
@@ -178,10 +181,11 @@
 
 								if(options.allowAdd == true || oldValue) {
 									// Make a new tag in front the input
+
 									html = '<li class="tagedit-listelement tagedit-listelement-old">';
-									html += '<span dir="'+options.direction+'">' + $(this).val() + '</span>';
+									html += '<span dir="'+options.direction+'">' + ((options.tagShowValue? value : label) || $(this).val()) + '</span>';
 									var name = oldValue? baseName + '['+id+options.addedPostfix+']' : baseName + '[]';
-									html += '<input type="hidden" name="'+name+'" value="'+ value +'" />';
+									html += '<input type="hidden" name="'+name+'" value="'+ (options.tagShowValue? label : value) +'" />';
 									html += '<a class="tagedit-close" title="'+options.texts.removeLinkTitle+'">x</a>';
 									html += '</li>';
 
@@ -453,7 +457,8 @@
                 
 				// If there is an entry for that already in the autocomplete, don't use it (Check could be case sensitive or not)
 				for (var i = 0; i < result.length; i++) {
-                    var label = options.checkNewEntriesCaseSensitive == true? result[i].label : result[i].label.toLowerCase();
+					var label = options.checkNewEntriesCaseSensitive == true? result[i].label : result[i].label.toLowerCase();
+
 					if (label == compareValue) {
 						isNew = false;
 						autoCompleteId = result[i].id;

@@ -20,6 +20,7 @@
 /* Item that is put to the List */
 .tagedit-list li.tagedit-listelement-old {background: #DEE7F8 url(../img/disc.png) 4px center no-repeat; border: 1px solid #CAD8F3; padding: 2px 0 2px 13px; -moz-border-radius: 8px 4px 4px 8px; -webkit-border-radius: 8px 4px 4px 8px; border-radius: 8px 4px 4px 8px;}
 .tagedit-list li.tagedit-listelement-old:hover {background-color: #D6E4FF;}
+.tagedit-list li.tagedit-listelement-old span { color: black;}
 .tagedit-list li.tagedit-listelement-old a.tagedit-close,
 .tagedit-list li.tagedit-listelement-old a.tagedit-break,
 .tagedit-list li.tagedit-listelement-old a.tagedit-delete,
@@ -28,7 +29,7 @@
 .tagedit-list li.tagedit-listelement-old a.tagedit-break {background-image: url(../img/undo.png); margin-right: 0;}
 .tagedit-list li.tagedit-listelement-old a.tagedit-delete {background-image: url(../img/delete.png); margin: 0 5px 0 2px; background-position: right center;}
 /* Items that are edited */
-.tagedit-list li.tagedit-listelement-edit input.tagedit-edit-input {border: 0; background: transparent; font-size: 11px; color: #666; padding: 0;}
+.tagedit-list li.tagedit-listelement-edit input.tagedit-edit-input {border: 0; background: transparent; font-size: 11px; color: black; padding: 0;}
 .tagedit-list li.tagedit-listelement-edit input:focus {outline: none;}
 .tagedit-list li.tagedit-listelement-edit a.tagedit-break {border: 0; margin-left: 0;}
 .tagedit-list li.tagedit-listelement-edit a.tagedit-close,
