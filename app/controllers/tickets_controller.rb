@@ -25,13 +25,13 @@ class TicketsController < ApplicationController
   def index
     if(params[:order] == "createDESC")
       @tickets = Ticket.find(:all,
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
-            :select => "tickets.*, topics.name, topics.color",
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
     else
       @tickets = Ticket.find(:all,
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
-            :select => "tickets.*, topics.name, topics.color",
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "(case priority
         when 'high' then 0
         when 'medium' then 1
@@ -151,9 +151,9 @@ class TicketsController < ApplicationController
 
   def query
     @tickets = Ticket.find(:all,
-            :conditions => ["description like ?", params[:query] + "%"],
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id" ,
-            :select => "tickets.*, topics.name, topics.color",
+            :conditions => ["description like ?","%"+ params[:query] + "%"],
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
   end
 end
