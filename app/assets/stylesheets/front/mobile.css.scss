@@ -23,29 +23,39 @@ article header{background:#272F3A;border-bottom:1px solid #1D212A;padding:14px 0
 header .tool,aside-ctrl{width:15%}
 #aside-ctrl a{position:relative;top:3px}
 #tool-ctrl{position:relative;top:2px}
-#tool-list{display:none}
-#tool-list{display:none;position:absolute;width:175px;top:60px;right:10px;background:#333A42;z-index:5;border-radius:5px;
+#tool-list{display:none;position:absolute;width:175px;top:60px;right:10px;background:#20BBD7;z-index:5;border-radius:5px;
 }
 #tool-list a{display:block;width:100%;height:55px;padding:15px 0 0 0;
-border-top:1px solid #515B67;border-bottom:1px solid #1D212A}
+border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
+#tool-list a:nth-child(1){border-top:none}
 
 /*-----------------------------------------------------------------------留言---*/
 
-#msg-list{padding:0 0 75px 0}
-.box{width:90%;margin:15px}
+#msg-list .box{width:90%;margin:15px;overflow:hidden}
 
 /*-----------------------------------------------------------------------留言左欄---*/
 
-.box .avator{float:right;text-align:center}
+#msg-list .avator{float:right;text-align:center}
 .box .img-border{width:49px;height:49px}
 .box .img-border img{width:45px;height:45px}
 
 /*-----------------------------------------------------------------------留言右欄---*/
 
-.box .content{float:none;clear:both}
-.box .text:before{background:image-url("arr-top.png");width:28px;height:12px;top:-12px;right:12px}
+#msg-list .content{float:none;clear:both}
+#msg-list .text:before{background:image-url("arr-top.png");width:28px;height:12px;top:-12px;right:12px}
 
 /*-----------------------------------------------------------------------發文---*/
 
 #post{width:100%;border-top:1px solid #222;padding:10px;position:fixed;bottom:0;z-index:5}
+#original-po .avator{display:none}
+#original-po .content{float:none;width:100%}
+#original-po .text p{font-size:13px}
 
+#msg-show .avator{text-align:center}
+#msg-show .box{width:95%;margin:20px auto}
+#msg-show .content{float:right;width:78%}
+#msg-show .text p{font-size:13px}
+#msg-show .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
+
+#msg-show .img-border{width:39px;height:39px}
+#msg-show .img-border img{width:35px;height:35px}

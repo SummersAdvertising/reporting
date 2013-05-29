@@ -86,15 +86,15 @@
         </h6>
 
         <div id="topic-add">
-         <!-- data-remote="true" -->
-          <form accept-charset="UTF-8" action="/subscribes" method="post" id="topicForm">
+         <!-- -->
+          <form accept-charset="UTF-8" action="/subscribes" method="post" id="topicForm" data-remote="true">
             <div style="margin:0;padding:0;display:inline">
               <input name="utf8" type="hidden" value="✓">
               <input name="authenticity_token" type="hidden" value="MtCsP1oggzzLksDJ4RZHdtPlEjiJNkbdDj3Gmmso15w=">
             </div>
 
             <input type="text" id="topic-text">
-            <input name="subscribe[topic]" type="text" id="topic-value">
+            <input name="topic" type="text" id="topic-value" style="display:none;">
             <input type="button" id="topic-button" value="增加">
           </form>
         </div>
@@ -122,7 +122,7 @@
             <td><h1><a href="/">夏天廣告回報系統</a></h1></td>
             <td class="tool">
               <a href="#" id="tool-ctrl"><img src="/images/set.png"></a>
-              <div id="tool-list"><%= link_to (image_tag("/images/logout.png")+"登出"), destroy_user_session_path, method: :delete %> <%= link_to (image_tag("/images/tag.png")+"專案管理") ,topics_path %> <%= link_to (image_tag("/images/user.png")+"使用者列表") ,admin_users_path, :id => "user-list" %></div>
+              <div id="tool-list"><%= link_to (image_tag("/images/logout.png")+"登出"), destroy_user_session_path, method: :delete %> <%= link_to (image_tag("/images/tag.png")+"專案管理") ,topics_path %> <%= link_to (image_tag("/images/user.png")+"使用者列表") ,admin_users_path, :class => "s-admin" %></div>
             </td>
           </tr>
         </table>
@@ -217,7 +217,6 @@ $.ajax({
       allowEdit: false,
       texts: {
         removeLinkTitle: "",
-        notInList: "無法標記不存在的使用者。",
         placeholder: "添加標籤"
       }
     });
@@ -242,8 +241,6 @@ $.ajax({
     });
   }
 });
-
-
 
 /* new ticket */
 $("#topic-button").click(function(){

@@ -45,8 +45,14 @@ class TicketsController < ApplicationController
   end
 
   def show
-  	@ticket = Ticket.find(params[:id])
+  	@ticket = Ticket.find(:first,
+            :conditions => ["tickets.id = ?",params[:id] ],
+            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :select => "tickets.*, topics.name, topics.color, users.username",
+            :order => "created_at ASC")
 
+    # return render :text => @ticket.to_json
+    
   	respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ticket }

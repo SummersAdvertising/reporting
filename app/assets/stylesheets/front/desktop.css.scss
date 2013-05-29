@@ -13,18 +13,18 @@ article{padding:0 0 0 300px}
 
 /*-----------------------------------------------------------------------頁首---*/
 
-article header{border-bottom:1px solid #333A42;padding:12px 0 0 0}
+article header{border-bottom:1px solid #333A42;padding:9px 0 0 0}
 
 #aside-ctrl,#tool-ctrl{display:none}
 header h1{width:190px;text-align:left;padding:5px 0 0 50px}
 header .tool{width:350px;text-align:right}
-#tool-list a{margin:0 15px 0 0;background:#878E94;border:1px solid #555859;border-radius:10px;padding:4px 10px}
+#tool-list a{margin:0 10px 0 0;background:#878E94;border:1px solid #555859;border-radius:10px;padding:4px 10px}
 #tool-list a:hover{background:#555859}
 
 /*-----------------------------------------------------------------------留言---*/
 
 #msg-list{border-top:1px solid #878E94}
-.box{width:90%;max-width:600px;margin:25px}
+#msg-list .box{width:90%;max-width:600px;margin:25px}
 
 /*-----------------------------------------------------------------------留言左欄---*/
 
@@ -34,10 +34,23 @@ header .tool{width:350px;text-align:right}
 
 /*-----------------------------------------------------------------------留言右欄---*/
 
-.box .content{float:right;width:78%}
-.box .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
+#msg-list .content{float:right;width:78%}
+#msg-list .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
 
 /*-----------------------------------------------------------------------發文---*/
 
-#post{width:90%;max-width:575px;margin:25px 25px 25px 50px;
+#msg-list #post{width:90%;max-width:575px;margin:25px 25px 25px 50px;
 border:1px solid #222;border-radius:5px;padding:10px;float:left}
+#original-po .text p{font-size:15px}
+
+#original-po .tool{display:none}
+
+#msg-show #post{width:90%;max-width:800px;margin:25px auto 50px auto;
+border:1px solid #222;border-radius:5px;padding:10px;clear:both;position:relative}
+#msg-show .box{width:90%;max-width:650px;margin:40px auto}
+#msg-show .content{float:right;width:78%}
+#msg-show .text p{font-size:15px}
+#msg-show .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
+
+#msg-show .img-border{width:49px;height:49px}
+#msg-show .img-border img{width:45px;height:45px}

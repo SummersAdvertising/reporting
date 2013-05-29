@@ -13,15 +13,15 @@ article header{background:#272F3A;border-bottom:1px solid #1D212A;padding:14px 0
 header .tool,#aside-ctrl{width:10%}
 #aside-ctrl a{position:relative;top:3px}
 #tool-ctrl{position:relative;top:2px}
-#tool-list{display:none;position:absolute;width:175px;top:60px;right:10px;background:#333A42;z-index:5;border-radius:5px;
+#tool-list{display:none;position:absolute;width:175px;top:60px;right:10px;background:#20BBD7;z-index:5;border-radius:5px;
 }
 #tool-list a{display:block;width:100%;height:55px;padding:15px 0 0 0;
-border-top:1px solid #515B67;border-bottom:1px solid #1D212A}
+border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
+#tool-list a:nth-child(1){border-top:none}
 
 /*-----------------------------------------------------------------------留言---*/
 
-#msg-list{padding:0 0 75px 0}
-.box{width:90%;margin:25px}
+#msg-list .box{width:90%;margin:25px}
 
 /*-----------------------------------------------------------------------留言左欄---*/
 
@@ -31,10 +31,18 @@ border-top:1px solid #515B67;border-bottom:1px solid #1D212A}
 
 /*-----------------------------------------------------------------------留言右欄---*/
 
-.box .content{float:right;width:78%}
-.box .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
+#msg-list .content{float:right;width:78%}
+#msg-list .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
 
 /*-----------------------------------------------------------------------發文---*/
 
 #post{width:100%;border-top:1px solid #222;padding:10px;position:fixed;bottom:0;z-index:5}
+#original-po .text p{font-size:14px}
 
+#msg-show .box{width:90%;margin:30px auto}
+#msg-show .content{float:right;width:78%}
+#msg-show .text p{font-size:14px}
+#msg-show .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
+
+#msg-show .img-border{width:39px;height:39px}
+#msg-show .img-border img{width:35px;height:35px}

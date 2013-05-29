@@ -8,8 +8,9 @@ class SubscribesController < ApplicationController
   end
 
   def destroy
-    #redirect_to request.referer
     @subscribe = Subscribe.find(params[:id])
+    @subscribe.destroy
+
     respond_to do |format|
       format.json { render json: @subscribe}
       format.js
@@ -17,15 +18,20 @@ class SubscribesController < ApplicationController
   end
 
   def create
-  	exit
-  	@subscribe = Subscribe.new
-  	@subscribe.user_id = current_user.username
+    @topic = JSON.parse(params[:topic])
 
-  	respond_to do |format|
-      format.json { render json: @subscribe}
-      format.js
+  	@subscribe = current_user.subscribes.new
+    @subscribe.topic_id = @topic["id"]
+    
+    if(@subscribe.save)
+      @subscribe["name"] = @topic["value"]
+      @subscribe["count"] = 0
+
+      respond_to do |format|
+        format.json { render json: @subscribe}
+        format.js
+      end
     end
-  	
   end
 
 end
