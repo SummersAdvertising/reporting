@@ -1,6 +1,7 @@
 class TracksController < ApplicationController
 	def create
 		@track = Ticket.find(params[:ticket_id]).tracks.new(params[:track])
+		@track.status = "track"
 		@track["actor"] = current_user.id
 
 		@track.save

@@ -1,43 +1,100 @@
+<% if @ticket %>
 <section id="original-po">
-	<div class="box">
+	<div class="tool">
+		<% if @ticket.status == "close" %>
+		<%= link_to image_tag("/images/tool-4.png"), ticket_reopen_path(@ticket), :method => "post", :id=> "on", :title => "開啟此回報" %>
+		<% end %>
+
+		<% if @ticket.status == "open" %>
+		<a href="#" id="off" title="關閉此回報"><img src="/images/tool-3.png"></a>
+		<% end %>
+
+		<a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a>
+		<%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除" %>
+	</div>
+
+	<div class="box box-show">
 		<div class="avator">
 			<div class="img-border"> <img src="/images/avator.jpg"> </div>
 			<div class="name"><%= @ticket.username %></div>
 		</div>
-		<!--avator-->
+        <!--avator-->
 
-		<div class="content">
-			<div class="text">
-				<ul class="tag">
-					<li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
+        <div class="content">
+        	<div class="text">
+        		<ul class="tag">
+        			<li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
 					<% @ticket.tags.each do |tag| %>
 					<li><%= tag.name %></li>
 					<% end %>
-				</ul>
-				<!--tag-->
-				<p><%= @ticket.description %></p>
-				<div class="cc">標記:
+        		</ul>
+        		<!--tag-->
+        		<p><%= @ticket.description %></p>
+        		<div class="cc"><% if @ticket.cc != "null" %>標記:
 					<% JSON.parse(@ticket.cc).each do |cc| %>
 					<% @cc = cc.split(/ /) %>
 					<a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
-					<% end %>  ，共有<a><%= @ticket.tracks.count %></a>則<a>留言</a>
+					<% end %>  ，<% end %>共有<a><%= @ticket.tracks.count %></a>則<a>留言</a>
 				</div>
-
-				<div class="deadline">期限至<a><%= @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
-			</div>
-		</div>
-		<!--content-->
-
-		<div class="tool">
-			<a href="#" title="編輯"><img src="/images/tool-2.png"></a>
-			<a href="#" class="s-admin" title="刪除"><img src="/images/tool-1.png"></a>
+        		<div class="deadline">期限至<a><%= @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
+        	</div>
         </div>
+        <!--content-->
+    </div>
+    <!--box-->
+
+    <div class="box box-edit">
+    	<div class="avator">
+    		<div class="img-border"> <img src="/images/avator.jpg"> </div>
+    		<div class="name"><%= @ticket.username %></div>
+    	</div>
+    	<!--avator-->
+    	<div class="content">
+    		<div class="text">
+    			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    				<tr>
+    					<td class="topic" width="18%">
+    						<ul class="tag">
+    							<li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
+    						</ul>
+    						<!--tag-->
+    					</td>
+    					<td width="1%">&nbsp;</td>
+    					<td class="tagmod" width="81%"><!--這裡放TAGMOD--></td>
+    				</tr>
+    			</table>
+    			<p><%= @ticket.description %></p>
+
+    			<div class="cc">
+    				<div class="tagmod">
+    					<!--這裡放TAGMOD-->
+    				</div>
+    			</div>
+
+    			<div class="deadline">
+    				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    					<tr>
+    						<td class="date" width="19"><input name="" type="text" placeholder="選擇期限"></td>
+    						<td width="1%">&nbsp;</td>
+    						<td class="note" width="80%"><input name="" type="text" placeholder="備註欄"></td>
+    					</tr>
+    				</table>
+    			</div>
+
+    			<div class="submit">
+    				<a href="#" id = "editSubmit">送出</a>
+    				<a href="#" id = "editCancel">取消</a>
+    			</div>
+    		</div>
+    	</div>
+    	<!--content-->
     </div>
     <!--box-->
 </section>
 <!--original-po-->
 
 <section id="msg-show">
+	<% if @ticket.status == "open" %>
 	<section id="post">
 		<div class="main">
 			<%= form_for(@track, :url => ticket_tracks_path(@ticket, @track)) do |f| %>
@@ -49,22 +106,14 @@
 			</table>
 			<% end %>
 		</div>
-		<% if @ticket.status != "open" %>
-		<div class="lock">
-			<div class="onoffswitch">
-				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
-				<label class="onoffswitch-label" for="myonoffswitch">
-					<div class="onoffswitch-inner"></div>
-					<div class="onoffswitch-switch"></div>
-				</label>
-			</div>
-			<p>封存中，要開啟此問題回報嗎？</p>
-		</div>
-		<% end %>
+		<div class="tips">
+          <p>請填寫關閉原因</p>
+        </div>
 	</section>
 	<!--post-->
+	<% end %>
 
-	<% @tracks.each do |track| %>
+    <% @tracks.each do |track| %>
 
 	<% if track.status == "track" %>
 	<div class="box">
@@ -93,8 +142,9 @@
 	<% end %>
 
 
-	
 </section>
+<!--mag-show-->
+
 
 <script type="text/javascript">
 $('.onoffswitch-checkbox').click(function(){
@@ -103,4 +153,24 @@ $('.onoffswitch-checkbox').click(function(){
 $("#main-send").click(function(){
 	$("#new_track").submit();
 });
+
+$("#off").click(function(){
+	alert("plis enter reason");
+});
+
+$('#tool-edit').click(function(){
+		$('.box-edit').fadeIn(0)		
+		$('.box-show').fadeOut(0)	
+	})
+
+$("#editCancel").click(function(){
+	$('.box-show').fadeIn(0)
+	$('.box-edit').fadeOut(0)	
+});
 </script>
+<% else %>
+<script type="text/javascript">
+window.location = "/";
+</script>
+
+<% end %>

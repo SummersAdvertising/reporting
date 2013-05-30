@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------全域---*/
 
 html{height:100%}
-body{height:100%;font:300 13px 微軟正黑體,"verdana";-webkit-text-size-adjust: none;
+body{height:100%;font:300 13px 微軟正黑體,"verdana";-webkit-text-size-adjust: 100%;
 color:#555;word-break:break-all;background:image-url("bg.png")}
-a{font:300 13px 微軟正黑體,"verdana";text-decoration:none;
+a{font:300 13px 微軟正黑體,"verdana";text-decoration:none;-webkit-text-size-adjust: 100%;
 -webkit-transition:all .5s ease;
 -moz-transition:all .5s ease}
 
@@ -119,8 +119,8 @@ header .tool{text-align:center}
 div.end{opacity:.25;filter:alpha(opacity=25)}
 div.end:hover{opacity:.50;filter:alpha(opacity=50)}
 div.highlight .time{
--webkit-animation:alert-bg 1s ease infinite alternate;
--moz-animation:alert-bg 1s ease infinite alternate}
+-webkit-animation:highlight-anm 1s ease infinite alternate;
+-moz-animation:highlight-anm 1s ease infinite alternate}
 
 /*-----------------------------------------------------------------------留言左欄---*/
 
@@ -166,11 +166,13 @@ cursor:pointer;font:300 13px 微軟正黑體,"verdana";color:#555;text-shadow:0 
 .option input,
 .option .tagmod{background:#656A70;color:#eee;border:none;border-top:1px solid #333A42;
 border-bottom:1px solid #656A70;height:32px}
-.option .tagmod input{background:#656A70;border:none!important;height:30px}
-.option .tagmod .tag{background:image-url("list.jpg");float:left;padding:3px 10px;margin:0 0 0 5px;
-color:#253635;font:300 12px 微軟正黑體,"verdana";border-radius:5px;text-shadow:0 1px 0 #fff;position:relative}
-.option .tagmod a{display:none;position:absolute;left:-5px;top:-5px;cursor:pointer}
-.option .tagmod .tag:hover a{display:block}
+
+.option .tagmod ul{border:none;width:100%}
+.option .tagmod li{background:#20BBD7!important;border:none!important;border-radius:5px!important}
+.option .tagmod span{color:#fff!important;text-shadow:0 -1px 0 #3196A8}
+.option .tagmod li input{background:#656A70!important;border-radius:5px!important;width:125px!important;color:#eee!important}
+
+.option .tagedit-close {border:none!important}
 
 /*-----------------------------------------------------------------------發文頁籤---*/
 
@@ -180,17 +182,6 @@ color:#253635;font:300 12px 微軟正黑體,"verdana";border-radius:5px;text-sha
 .option .tab img{opacity:.25;filter:alpha(opacity=25)}
 .option .tab a:hover img,
 .option .active img{opacity:1;filter:alpha(opacity=100)}
-
-/*-----------------------------------------------------------------------動畫---*/
-
-@-webkit-keyframes alert-bg {
-	0% { background-color:#272F3A }	
-	100% {background-color:#20BBD7 }
-}
-@-moz-keyframes alert-bg {
-	0% { background-color:#272F3A }	
-	100% {background-color:#20BBD7 }
-}
 
 /*-----------------------------------------------------------------------回覆---*/
 
@@ -204,21 +195,11 @@ color:#253635;font:300 12px 微軟正黑體,"verdana";border-radius:5px;text-sha
 #msg-show .text p{padding:0;color:#222;font:300 14px 微軟正黑體,"verdana";line-height:1.7em}
 #msg-show .time{display:none}
 
-/*-----------------------------------------------------------------------原PO---*/
+/*-----------------------------------------------------------------------功能---*/
 
 #original-po{
 background:#333A42;border-bottom:1px solid #1D212A;	box-shadow: inset 0 0 10px #1D212A;
-padding:5% 0;position:relative}
-#original-po .box{overflow:hidden;width:90%;max-width:800px;margin:0 auto}
-#original-po .text{color:#eee;text-shadow:0 -1px 0 #1D212A;font:300 15px 微軟正黑體,"verdana";line-height:1.7em}
-#original-po .cc{padding:30px 0 0 0}
-#original-po .cc,#original-po .deadline{color:#999;font:300 11px 微軟正黑體,"verdana";line-height:1.7em}
-#original-po .cc a,#original-po .deadline a{color:#20BBD7;font:300 11px 微軟正黑體,"verdana";margin:0 3px}
-#original-po .cc a:hover{text-decoration:underline}
-
-#original-po:hover .tool{display:inline}
-
-#original-po .content{width:78%;float:right}
+position:relative}
 #original-po .tool{position:absolute;right:10px;top:15px}
 #original-po .tool a{display:inline-block!important;width:25px;height:25px;background:image-url("list.jpg") 0 bottom repeat-x;
 margin:0 auto;border-radius:50%;padding:4px 0 0 0;margin:0 5px;border:1px solid #333A42;text-align:center}
@@ -226,19 +207,114 @@ margin:0 auto;border-radius:50%;padding:4px 0 0 0;margin:0 5px;border:1px solid 
 #original-po .tool a:hover{background:image-url("active.jpg") 0 0 repeat-x}
 #original-po .tool a:hover img{opacity:1;filter:alpha(opacity=100)}
 
+#original-po #on{background:#20bbd7}
+
+/*-----------------------------------------------------------------------原PO---*/
+
+.box-show{overflow:hidden;width:90%;max-width:800px;margin:0 auto;padding:5% 0}
+.box-show .text{color:#eee;text-shadow:0 -1px 0 #1D212A;font:300 15px 微軟正黑體,"verdana";line-height:1.7em}
+
+.box-show .cc{padding:30px 0 0 0}
+.box-show .cc,#original-po .deadline{color:#999;font:300 11px 微軟正黑體,"verdana";line-height:1.7em}
+.box-show .cc a,#original-po .deadline a{color:#20BBD7;font:300 11px 微軟正黑體,"verdana";margin:0 3px}
+.box-show .cc a:hover{text-decoration:underline}
+
+.box-show .content{width:78%;float:right}
+
+/*-----------------------------------------------------------------------編輯---*/
+
+.box-edit{overflow:hidden;width:90%;max-width:800px;margin:0 auto;padding:5% 0}
+.box-edit .text{color:#eee;text-shadow:0 -1px 0 #1D212A;font:300 15px 微軟正黑體,"verdana";line-height:1.7em}
+
+.box-edit .cc{padding:30px 0 0 0}
+.box-edit .cc,#original-po .deadline{color:#999;font:300 11px 微軟正黑體,"verdana";line-height:1.7em}
+.box-edit .cc a,#original-po .deadline a{color:#20BBD7;font:300 11px 微軟正黑體,"verdana";margin:0 3px}
+.box-edit .cc a:hover{text-decoration:underline}
+
+.box-edit .content{width:78%;float:right}
+
+.box-edit textarea{background:#656A70;width:100%;min-height:100px;border:none}
+.box-edit input{padding:0 5px;width:100%;font:300 13px 微軟正黑體,"verdana"}
+.box-edit input,
+.box-edit .tagmod{background:#656A70;color:#eee;border:none;border-top:1px solid #333A42;
+border-bottom:1px solid #656A70;height:32px}
+
+.box-edit .tagmod ul{border:none;width:100%}
+.box-edit .tagmod li{background:#20BBD7!important;border:none!important;border-radius:5px!important}
+.box-edit .tagmod span{color:#fff!important;text-shadow:0 -1px 0 #3196A8}
+.box-edit .tagmod li input{background:#656A70!important;border-radius:5px!important;width:125px!important;color:#eee!important}
+
+.box-edit .tagedit-close {border:none!important}
+
+.box-edit .submit{text-align:right;}
+.box-edit .submit a{display:inline-block;width:75px;height:25px;background:image-url("list.jpg") 0 bottom repeat-x;
+	text-align:center;padding:5px 0 0 0;color:#555;text-shadow:0 1px 0 #fff;border-radius:5px;}
+
+
+/*-----------------------------------------------------------------------系統---*/
+
 .log{text-align:center;border-bottom:1px solid #7E858C;overflow:inherit!important;position:relative;top:-10px;}
 .log:after{content:" ";display:block;width:100%;border-bottom:1px solid #4A4F53}
 .log span{color:#ABB6B8;text-shadow:0 -1px 0 #313437;background:image-url("bg.png");
 position:relative;top:10px;padding:0 15px;font-size:12px}
 .log a{margin:0 5px}
 
-/*-----------------------------------------------------------------------解鎖---*/
+/*-----------------------------------------------------------------------提示---*/
 
-.lock{background:#333A42;position:absolute;top:0;left:0;
-width:100%!important;max-width:800px;border-radius:5px;clear:both;height:50px;overflow:hidden;
-padding:10px 0 0 10px}
-.lock p{text-align:center;float:left;color:#999;padding:7px 0 0 10px}
+.tips{position:absolute;top:-40px;left:30px;height:47px;background:image-url("arr2-bottom.png") center bottom no-repeat;
+-webkit-animation:tips-anm .5s ease infinite alternate;
+-moz-animation:tips-anm .5s ease infinite alternate}
+.tips p{color:#fff;padding:12px 10px 10px 10px;background:#20BBD7;border-radius:5px;text-shadow:0 -1px 0 #3196A8;box-shadow:0 0 5px #333}
 
+
+/*-----------------------------------------------------------------------動畫---*/
+
+@-webkit-keyframes highlight-anm {
+	0% { background-color:#272F3A }	
+	100% {background-color:#20BBD7 }
+}
+@-moz-keyframes highlight-anm {
+	0% { background-color:#272F3A }	
+	100% {background-color:#20BBD7 }
+}
+@-webkit-keyframes tips-anm {
+	0% { top:-40px }	
+	100% {top:-30px }
+}
+@-moz-keyframes tips-anm {
+	0% { top:-40px }	
+	100% {top:-30px }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------------------------------------------------------開關---
 .onoffswitch {position:relative;width:85px;float:left;
 -webkit-user-select:none;-moz-user-select:none;-ms-user-select: none}
 .onoffswitch-checkbox {display:none}
@@ -256,3 +332,4 @@ position:absolute;top:0;bottom:0;right:62px;box-shadow:0 0 5px #000;
 -moz-transition:all 0.3s ease-in 0s;-webkit-transition:all 0.3s ease-in 0s}
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {margin-left:0}
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {right:0px}
+*/

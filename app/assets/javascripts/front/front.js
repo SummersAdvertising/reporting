@@ -53,6 +53,11 @@ $(document).ready(function(){
 	$('.option .tab a').click(function(){
 		$('.tab-content').fadeIn()		
 	})
+	$('.box-edit').hide()
+	$('#tool-edit').click(function(){
+		$('.box-edit').fadeIn(0)		
+		$('.box-show').fadeOut(0)	
+	})
 
 	/* aside adjusts height */
 	var adjustHeight = $("article").outerHeight();

@@ -16,13 +16,13 @@
       </ul>
       <!--tag-->
       <p><%= ticket.description %></p>
-      <div class="cc">標記:
+      <div class="cc"><%if ticket.cc != "null" %>標記:
         <% JSON.parse(ticket.cc).each do |cc| %>
         <% @cc = cc.split(/ /) %>
         
         <a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
         <% end %> 
-        ，共有<a href="<%= ticket_path(ticket) %>"><%= ticket.tracks.count %></a>則留言</div>
+        ，<% end %> 共有<a href="<%= ticket_path(ticket) %>"><%= ticket.tracks.count %></a>則留言</div>
     </div>
   </div>
   <!--content--> 

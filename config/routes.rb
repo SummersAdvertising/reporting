@@ -5,8 +5,12 @@ Reporting::Application.routes.draw do
   }
 
   resources :tickets, :except => ["new"] do
+    match "/reopen" => "tickets#reopen", :via => "post", :as => "reopen"
+    match "/close" => "tickets#close", :via => "post", :as => "close"
+
     resources :tracks, :only => ["create"]
   end
+
   resources :topics
   resources :subscribes, :only => ["create", "destroy"]
 

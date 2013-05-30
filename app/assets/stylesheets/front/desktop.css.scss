@@ -37,16 +37,22 @@ header .tool{width:350px;text-align:right}
 #msg-list .content{float:right;width:78%}
 #msg-list .text:before{background:image-url("arr-left.png");width:12px;height:28px;top:12px;left:-12px}
 
-/*-----------------------------------------------------------------------發文---*/
+/*-----------------------------------------------------------------------留言發文---*/
 
 #msg-list #post{width:90%;max-width:575px;margin:25px 25px 25px 50px;
 border:1px solid #222;border-radius:5px;padding:10px;float:left}
+
+/*-----------------------------------------------------------------------原PO---*/
+
 #original-po .text p{font-size:15px}
 
-#original-po .tool{display:none}
+/*-----------------------------------------------------------------------回覆發文---*/
 
 #msg-show #post{width:90%;max-width:800px;margin:25px auto 50px auto;
 border:1px solid #222;border-radius:5px;padding:10px;clear:both;position:relative}
+
+/*-----------------------------------------------------------------------回覆---*/
+
 #msg-show .box{width:90%;max-width:650px;margin:40px auto}
 #msg-show .content{float:right;width:78%}
 #msg-show .text p{font-size:15px}

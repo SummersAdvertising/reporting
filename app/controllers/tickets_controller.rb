@@ -1,3 +1,4 @@
+# coding: utf-8
 class TicketsController < ApplicationController
   def index
     if(params[:order] == "createDESC")
@@ -101,5 +102,43 @@ class TicketsController < ApplicationController
             :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
+  end
+
+  def reopen
+    @ticket = Ticket.find(params[:ticket_id])
+    @ticket.status = "open"
+    @ticket.save
+
+    @track = @ticket.tracks.new
+    @track.status = "log"
+    @track.actor = current_user.id
+    @track.comment = "重新開啟該回報。"
+
+    @track.save
+
+    respond_to do |format|
+      format.html { redirect_to ticket_path(@ticket) }
+      format.json { head :no_content }
+    end
+    
+  end
+
+  def close
+    @ticket = Ticket.find(params[:ticket_id])
+    @ticket.status = "close"
+    @ticket.save
+
+    @track = @ticket.tracks.new
+    @track.status = "log"
+    @track.actor = current_user.id
+    @track.comment = "關閉該回報，原因："+params[:track]["comment"]+"。"
+
+    @track.save
+
+    respond_to do |format|
+      format.html { redirect_to ticket_path(@ticket) }
+      format.json { head :no_content }
+    end
+    
   end
 end
