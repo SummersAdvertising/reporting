@@ -2,9 +2,9 @@ class SubscribesController < ApplicationController
   def topicShow
   	@tickets = Ticket.find(:all,
   		:conditions => {:topic_id => params[:id]},
-  		:joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id",
-  		:select => "tickets.*, topics.name, topics.color",
-  		:order => "created_at ASC")
+  		:joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter",
+  		:select => "tickets.*, topics.name, topics.color, users.username",
+  		:order => "tickets.created_at ASC")
   end
 
   def destroy

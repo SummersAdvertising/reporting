@@ -1,104 +1,106 @@
 <section id="original-po">
-  <div class="box">
-  	<div class="avator">
-  	  <div class="img-border"> <img src="/images/avator.jpg"> </div>
-  	  <div class="name"><%= @ticket.username %></div>
-  	</div>
-  	<!--avator-->
+	<div class="box">
+		<div class="avator">
+			<div class="img-border"> <img src="/images/avator.jpg"> </div>
+			<div class="name"><%= @ticket.username %></div>
+		</div>
+		<!--avator-->
 
-  	<div class="content">
-  	  <div class="text">
-  	  	<ul class="tag">
-  	  	  <li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
-  	  	  <% @ticket.tags.each do |tag| %>
-  	  	  <li><%= tag.name %></li>
-  	  	  <% end %>
-  	  	</ul>
-  	  	<!--tag-->
-  	  	<p><%= @ticket.description %></p>
-  	  	<div class="cc">標記:
-  	  		<% JSON.parse(@ticket.cc).each do |cc| %>
-  	  		<% @cc = cc.split(/ /) %>
-  	  		<a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
-  	  		<% end %>  ，共有<a><%= @ticket.tracks.count %></a>則<a>留言</a></div>
-  	  	<div class="deadline">期限至<a><%= @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
-  	  </div>
-  	</div>
-  	<!--content-->
+		<div class="content">
+			<div class="text">
+				<ul class="tag">
+					<li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
+					<% @ticket.tags.each do |tag| %>
+					<li><%= tag.name %></li>
+					<% end %>
+				</ul>
+				<!--tag-->
+				<p><%= @ticket.description %></p>
+				<div class="cc">標記:
+					<% JSON.parse(@ticket.cc).each do |cc| %>
+					<% @cc = cc.split(/ /) %>
+					<a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
+					<% end %>  ，共有<a><%= @ticket.tracks.count %></a>則<a>留言</a>
+				</div>
 
-  	<div class="tool">
-  		<a href="#" title="編輯"><img src="/images/tool-2.png"></a>
-        	<a href="#" class="s-admin" title="刪除"><img src="/images/tool-1.png"></a>
+				<div class="deadline">期限至<a><%= @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
+			</div>
+		</div>
+		<!--content-->
+
+		<div class="tool">
+			<a href="#" title="編輯"><img src="/images/tool-2.png"></a>
+			<a href="#" class="s-admin" title="刪除"><img src="/images/tool-1.png"></a>
         </div>
-        
-      </div>
-      <!--box--> 
-    </section>
-    <!--original-po-->
-    <section id="msg-show">
-      <section id="post">
-        <div class="main">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td width="90%"><input name="" type="text" id="main-text"></td>
-              <td width="10%"><input name="" type="button" id="main-send" value="送出"></td>
-            </tr>
-          </table>
-        </div>
-        <div class="lock">
-          <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
-            <label class="onoffswitch-label" for="myonoffswitch">
-            <div class="onoffswitch-inner"></div>
-            <div class="onoffswitch-switch"></div>
-            </label>
-          </div>
-          <p>封存中，要開啟此問題回報嗎？</p>
-        </div>
-      </section>
-      <!--post-->
-      
-      <div class="box">
-        <div class="avator">
-          <div class="img-border"> <img src="/images/avator.jpg"> </div>
-          <div class="name">Elaphurus Liang</div>
-        </div>
-        <!--avator--> 
-        <!--avator-->
-        <div class="content"> <span class="time">2013-05-20 11:46</span>
-          <div class="text">
-            <p>程式部分請育哲協助，頁腳選單已更改</p>
-          </div>
-          <!--text--> 
-        </div>
-        <!--content--> 
-      </div>
-      <!--box-->
-      <div class="box log"> <span><a>toto</a>新增標記了<a>Yuzhe</a></span> </div>
-      <!--log-->
-      <div class="box">
-        <div class="avator">
-          <div class="img-border"> <img src="/images/avator.jpg"> </div>
-          <div class="name">Yuzhe</div>
-        </div>
-        <!--avator--> 
-        <!--avator-->
-        <div class="content"> <span class="time">2013-05-20 11:46</span>
-          <div class="text">
-            <p>已修正</p>
-          </div>
-          <!--text--> 
-        </div>
-        <!--content--> 
-      </div>
-      <!--box-->
-      <div class="box log"> <span><a>Yuzhe</a>解決了此問題</span> </div>
-      <!--log-->
-      <div class="box log"> <span><a>toto</a>重新開啟了此問題</span> </div>
-      <!--log--> 
-    </section>
-    <script type="text/javascript">
-    $('.onoffswitch-checkbox').click(function(){
-		$('.lock').delay(750).fadeOut(250)
-	})
-	</script>
+    </div>
+    <!--box-->
+</section>
+<!--original-po-->
+
+<section id="msg-show">
+	<section id="post">
+		<div class="main">
+			<%= form_for(@track, :url => ticket_tracks_path(@ticket, @track)) do |f| %>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="90%"><%= f.text_field :comment, :id => "main-text", :autocomplete => "off" %></td>
+					<td width="10%"><input name="" type="button" id="main-send" value="送出"></td>
+				</tr>
+			</table>
+			<% end %>
+		</div>
+		<% if @ticket.status != "open" %>
+		<div class="lock">
+			<div class="onoffswitch">
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+				<label class="onoffswitch-label" for="myonoffswitch">
+					<div class="onoffswitch-inner"></div>
+					<div class="onoffswitch-switch"></div>
+				</label>
+			</div>
+			<p>封存中，要開啟此問題回報嗎？</p>
+		</div>
+		<% end %>
+	</section>
+	<!--post-->
+
+	<% @tracks.each do |track| %>
+
+	<% if track.status == "track" %>
+	<div class="box">
+		<div class="avator">
+			<div class="img-border"> <img src="/images/avator.jpg"> </div>
+			<div class="name"><%= track.username %></div>
+		</div>
+		<!--avator-->
+
+		<div class="content"> <span class="time"><%= track.created_at %></span>
+			<div class="text">
+				<p><%= track.comment %></p>
+			</div>
+			<!--text-->
+		</div>
+		<!--content-->
+	</div>
+	<!--box-->
+	<% end %>
+
+	<% if track.status == "log" %>
+	<div class="box log"> <span><a><%= track.username %></a><%= track.comment %></span> </div>
+	<!--log-->
+	<% end %>
+	
+	<% end %>
+
+
+	
+</section>
+
+<script type="text/javascript">
+$('.onoffswitch-checkbox').click(function(){
+	$('.lock').delay(750).fadeOut(250)
+})
+$("#main-send").click(function(){
+	$("#new_track").submit();
+});
+</script>

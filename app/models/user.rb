@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   has_many :subscribes
   has_many :topics, :through => :subscribes
+
+  has_many :tracks
 end

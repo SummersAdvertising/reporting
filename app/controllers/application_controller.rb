@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :check_authorization
+  before_filter :log
   def check_authorization
     if (!user_signed_in?)
     	redirect_to new_user_session_path
@@ -16,5 +17,9 @@ class ApplicationController < ActionController::Base
             :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
             :select => "subscribes.*, topics.name, topics.count")
   	
+  end
+  def log
+    #log
+    
   end
 end

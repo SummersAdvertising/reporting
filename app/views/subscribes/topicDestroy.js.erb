@@ -1,7 +1,0 @@
-var delSub = $(".ticket[data-del= <%= @subscribe.id  %> ]");
-
-delSub.css("position", "relative").animate({
-	left: "-="+delSub.outerWidth()+"px"
-  }, 500, function(){
-  	delSub.remove();
-});

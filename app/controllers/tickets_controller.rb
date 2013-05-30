@@ -1,27 +1,4 @@
 class TicketsController < ApplicationController
-  def test
-  	@tickets = Ticket.order("(case priority 
-     when 'high' then 0 
-     when 'medium' then 1
-     when 'low' then 2
-     else 3
-     end), deadline ASC, created_at ASC").all
-
-  	@ticket = Ticket.new
-
-    #topics for autocomplete
-    @topics = Array.new
-    Topic.all.each do |topic|
-      @topics.push({:id => topic.id, :label => topic.name})
-    end
-
-    @topics = @topics.to_json
-
-  	respond_to do |format|
-  		format.html # index.html.erb
-  	end
-  end
-
   def index
     if(params[:order] == "createDESC")
       @tickets = Ticket.find(:all,
@@ -51,8 +28,13 @@ class TicketsController < ApplicationController
             :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
 
-    # return render :text => @ticket.to_json
-    
+    @track = Track.new
+    @tracks = Track.find(:all,
+            :conditions => ["tracks.ticket_id = ?",params[:id] ],
+            :joins => "LEFT JOIN 'users' ON users.id = tracks.actor" ,
+            :select => "tracks.status, tracks.comment, tracks.created_at, users.username",
+            :order => "tracks.created_at ASC")
+
   	respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ticket }
@@ -67,6 +49,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     @ticket.reporter = current_user.id
     @ticket.cc = params[:cc].to_json
+    @ticket.status = "open"
 
     respond_to do |format|
       if @ticket.save
@@ -110,49 +93,6 @@ class TicketsController < ApplicationController
       format.html { redirect_to root_path }
       format.json { head :no_content }
     end
-  end
-
-  def getUsers
-    @users = Array.new
-
-    User.all.each do |user|
-      @user = {"id" => user.id, "label" => (user.username + " " + user.email), "value" => user.username}
-
-      @users.push(@user)
-    end
-
-    respond_to do |format|
-      format.json { render json: @users}
-    end
-    
-  end
-
-  def getTags
-    @tags = Array.new
-
-    Tag.all.each do |tag|
-      @tag = {"id" => tag.id, "label" => tag.name, "value" => tag.id}
-
-      @tags.push(@tag)
-    end
-
-    respond_to do |format|
-      format.json { render json: @tags}
-    end
-    
-  end
-
-  def getTopics
-    @topics = Array.new
-
-    Topic.all.each do |topic|
-      @topics.push( {"id" => topic.id, "value" => topic.name} )
-    end
-
-    respond_to do |format|
-      format.json { render json: @topics}
-    end
-    
   end
 
   def query

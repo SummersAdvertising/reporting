@@ -4,20 +4,20 @@ Reporting::Application.routes.draw do
     :sessions => "sessions"
   }
 
-  resources :tickets, :except => ["new"]
+  resources :tickets, :except => ["new"] do
+    resources :tracks, :only => ["create"]
+  end
   resources :topics
   resources :subscribes, :only => ["create", "destroy"]
 
   #routes for subscribing topics
   get 'tickets/topics/:id' => "subscribes#topicShow", :as => "ticket_topic"
-
   get 'tickets/query/:query' => "tickets#query", :as => "ticket_query"
 
   #get resource for autocomplete
-  get "/getUsers" => "tickets#getUsers"
-  get "/getTopics" => "tickets#getTopics"
-  get "/getTags" => "tickets#getTags"
-  get "/test" => "tickets#test"
+  get "/getUsers" => "autocomplete#getUsers"
+  get "/getTopics" => "autocomplete#getTopics"
+  get "/getTags" => "autocomplete#getTags"
 
   namespace :admin do
   	root :to => 'tickets#index'
