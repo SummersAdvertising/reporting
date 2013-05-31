@@ -3,12 +3,12 @@ class TicketsController < ApplicationController
   def index
     if(params[:order] == "createDESC")
       @tickets = Ticket.find(:all,
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
     else
       @tickets = Ticket.find(:all,
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "(case priority
         when 'high' then 0
@@ -25,14 +25,14 @@ class TicketsController < ApplicationController
   def show
   	@ticket = Ticket.find(:first,
             :conditions => ["tickets.id = ?",params[:id] ],
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
 
     @track = Track.new
     @tracks = Track.find(:all,
             :conditions => ["tracks.ticket_id = ?",params[:id] ],
-            :joins => "LEFT JOIN 'users' ON users.id = tracks.actor" ,
+            :joins => "LEFT JOIN users ON users.id = tracks.actor" ,
             :select => "tracks.status, tracks.comment, tracks.created_at, users.username",
             :order => "tracks.created_at ASC")
 
@@ -107,7 +107,7 @@ class TicketsController < ApplicationController
   def query
     @tickets = Ticket.find(:all,
             :conditions => ["description like ?","%"+ params[:query] + "%"],
-            :joins => "LEFT JOIN 'topics' ON topics.id = tickets.topic_id LEFT JOIN 'users' ON users.id = tickets.reporter" ,
+            :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
             :order => "created_at ASC")
   end

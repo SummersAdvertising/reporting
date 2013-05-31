@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   	
     @subscribes = Subscribe.find(:all,
             :conditions => {:user_id => current_user.id},
-            :joins => "LEFT JOIN 'topics' ON topics.id = subscribes.topic_id" ,
+            :joins => "LEFT JOIN topics ON topics.id = subscribes.topic_id" ,
             :select => "subscribes.*, topics.name, topics.count")
   	
   end
