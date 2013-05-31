@@ -2,12 +2,12 @@
 <section id="original-po">
 	<div class="tool">
 		<% if @ticket.status == "close" %>
-		<%= link_to image_tag("/images/tool-4.png"), ticket_reopen_path(@ticket), :method => "post", :id=> "on", :title => "開啟此回報" %>
+		<%= link_to image_tag("/images/tool-3.png"), ticket_reopen_path(@ticket), :method => "post", :id=> "on", :title => "開啟此回報" %>
 		<% end %>
 
 		<% if @ticket.status == "open" %>
-		<a href="#" id="off" title="關閉此回報"><img src="/images/tool-3.png"></a>
-		<a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a>
+		<a href="#" id="off" title="關閉此回報"><img src="/images/tool-4.png"></a>
+		<!-- <a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a> -->
 		<% end %>
 		
 		<%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除" %>
@@ -44,6 +44,7 @@
     <!--box-->
 
     <div class="box box-edit">
+    	<%= form_for(@ticket) do |f| %>
     	<div class="avator">
     		<div class="img-border"> <img src="/images/avator.jpg"> </div>
     		<div class="name"><%= @ticket.username %></div>
@@ -60,7 +61,12 @@
     						<!--tag-->
     					</td>
     					<td width="1%">&nbsp;</td>
-    					<td class="tagmod" width="81%"><!--這裡放TAGMOD--></td>
+    					<td class="tagmod" width="81%"><!--這裡放TAGMOD-->
+    						<% @ticket.tags.each do |tag| %>
+    						<input class="tagAC" type="text" name="tag[]" value='{"label": "<%= tag.name %>", "value": "<%= tag.id %>"}' />
+    						<% end %>
+    						
+    					</td>
     				</tr>
     			</table>
     			<p><%= @ticket.description %></p>
@@ -68,19 +74,26 @@
     			<div class="cc">
     				<div class="tagmod">
     					<!--這裡放TAGMOD-->
+    					<% if @ticket.cc != "null" %>
+    					<% JSON.parse(@ticket.cc).each do |cc| %>
+    					<% @cc = cc.split(/ /) %>
+    					<input class="userAC" type="text" name="cc[]" value='{"label": "<%= @cc[0] %>", "value": "<%= cc %>"}' />
+    					<% end %>
+    					<% end %>
     				</div>
     			</div>
 
     			<div class="deadline">
     				<table width="100%" border="0" cellspacing="0" cellpadding="0">
     					<tr>
-    						<td class="date" width="19"><input name="" type="text" placeholder="選擇期限"></td>
+    						<td class="date" width="19"><%= f.text_field :deadline, :placeholder => "選擇期限", :autocomplete => "off", :value => @ticket.deadline.strftime("%Y-%m-%d") %></td>
     						<td width="1%">&nbsp;</td>
-    						<td class="note" width="80%"><input name="" type="text" placeholder="備註欄"></td>
+    						<td class="note" width="80%"><%= f.text_field :period, :placeholder => "備註欄", :autocomplete => "off" %></td>
     					</tr>
     				</table>
     			</div>
-
+    			<input id="tagChange" type="hidden" name="tagChange">
+    			<input id="ccChange" type="hidden" name="ccChange">
     			<div class="submit">
     				<a href="#" id = "editSubmit">送出</a>
     				<a href="#" id = "editCancel">取消</a>
@@ -90,6 +103,7 @@
     	<!--content-->
     </div>
     <!--box-->
+    <% end %>
 </section>
 <!--original-po-->
 
@@ -155,7 +169,7 @@ $("#main-send").click(function(){
 });
 
 var btnOff = $("#off");
-var btnOffCancel = $('<a href="#" id="offCancel" title="開啟此回報"><img src="/images/tool-4.png"></a>');
+var btnOffCancel = $('<a href="#" id="offCancel" title="開啟此回報"><img src="/images/tool-3.png"></a>');
 $("#off").click(function(){
 	btnOffClick();
 });
@@ -184,6 +198,21 @@ $('#tool-edit').click(function(){
 $("#editCancel").click(function(){
 	$('.box-show').fadeIn(0)
 	$('.box-edit').fadeOut(0)	
+});
+
+$( "#ticket_deadline" ).datepicker();
+$( "#ticket_deadline" ).change(function(){
+  $(this).datepicker("option", "dateFormat", "yy-mm-dd");
+
+  //compare the date
+  if(new Date($(this).val()) <= new Date()){
+    $(this).val('<%= @ticket.deadline.strftime("%Y-%m-%d") %>');
+    alert("期限日期不能為過去的日期");
+  }
+});
+
+$("#editSubmit").click(function(){
+	$("#edit_ticket_<%= @ticket.id%>").submit();
 });
 </script>
 <% else %>

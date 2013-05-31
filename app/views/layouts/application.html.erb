@@ -47,7 +47,7 @@
 
       <section id="topic">
         <h6>最新動態</h6>
-        <div class="ticket">
+        <!-- <div class="ticket">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td class="topic-name"><a href="#">近期回報</a></td>
@@ -63,7 +63,7 @@
               <td class="notice"><span>1</span></td>
             </tr>
           </table>
-        </div>
+        </div> -->
 
         <div class="ticket">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -213,11 +213,12 @@ $.ajax({
   complete: function (XMLHttpRequest, textStatus) {
     var tagList = $.parseJSON(XMLHttpRequest.responseText);
 
-    $("#tagAC").tagedit({
+    $(".tagAC").tagedit({
       autocompleteURL: tagList,
       tagShowValue: false,
       allowEdit: false,
       texts: {
+        recordChange: "#tagChange",
         removeLinkTitle: "",
         placeholder: "添加標籤"
       }
@@ -231,11 +232,12 @@ $.ajax({
   complete: function (XMLHttpRequest, textStatus) {
     var ccList = $.parseJSON(XMLHttpRequest.responseText);
 
-    $("#userAC").tagedit({
+    $(".userAC").tagedit({
       autocompleteURL: ccList,
       allowEdit: false,
       allowSelfNew: false,
       texts: {
+        recordChange: "#ccChange",
         removeLinkTitle: "",
         notInList: "無法標記不存在的使用者。",
         placeholder: "想要把誰標記進來？"

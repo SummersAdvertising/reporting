@@ -72,8 +72,13 @@ class TicketsController < ApplicationController
   end
 
   def update
+    
     @ticket = Ticket.find(params[:id])
+    @ccDel = @ticket.cc
+    @ccNew = (params[:cc].to_json)
 
+    return render :text => @ccNew
+    exit
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
         format.html { redirect_to @ticket, notice: 'ticket was successfully updated.' }
@@ -83,6 +88,9 @@ class TicketsController < ApplicationController
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def compare
   end
 
   def destroy
