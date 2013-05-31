@@ -106,7 +106,7 @@
 			</table>
 			<% end %>
 		</div>
-		<div class="tips">
+		<div class="tips" style="display:none;">
           <p>請填寫關閉原因</p>
         </div>
 	</section>
@@ -154,9 +154,27 @@ $("#main-send").click(function(){
 	$("#new_track").submit();
 });
 
+var btnOff = $("#off");
+var btnOffCancel = $('<a href="#" id="offCancel" title="開啟此回報"><img src="/images/tool-4.png"></a>');
 $("#off").click(function(){
-	alert("plis enter reason");
+	btnOffClick();
 });
+
+function btnOffClick(){
+	$(".tips").show();
+	if($("#offCancel").length==0){
+		$("#off").after(btnOffCancel);
+		$("#new_track").attr("action", "<%= ticket_close_path(@ticket) %>");
+
+		btnOffCancel.click(function() {
+			btnOffCancel.after(btnOff).remove();
+			btnOff.bind("click", btnOffClick);
+			$("#new_track").attr("action", "<%= ticket_tracks_path(@ticket) %>");
+			$(".tips").hide();
+		});
+	}
+	$("#off").remove();
+}
 
 $('#tool-edit').click(function(){
 		$('.box-edit').fadeIn(0)		
