@@ -1,5 +1,5 @@
 <% @tickets.each do |ticket| %>
-<div class="box <%= "highlight" if (ticket.priority == "high")%>">
+<div class="box<%= " highlight" if (ticket.priority == "high")%><%= " end" if (ticket.status == "close")%>">
   <div class="avator">
     <div class="img-border"> <img src="/images/avator.jpg"> </div>
     <div class="name"><%= ticket.username %></div>
