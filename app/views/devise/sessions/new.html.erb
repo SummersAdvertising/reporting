@@ -1,17 +1,53 @@
-<h2>Sign in</h2>
+<!doctype html>
+<html>
+<head>
+<!--[if lt IE 9]>
+<script src="js/html5.js"></script>
+<link rel="stylesheet" href="css/desktop.css">
+<![endif]-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="Robots" content="index,follow"/>
+<meta http-equiv="content-language" content="zh-TW" />
+<title>夏天廣告回報系統</title>
+<link rel="stylesheet" type="text/css" href="/assets/front/reset">
+<link rel="stylesheet" type="text/css" href="/assets/login/login">
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+<%= javascript_include_tag "login" %>
+</head>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<body>
+<section id="wrapper">
+<section id="vert">
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+	<section id="login">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th width="20%" align="center">帳號</th>
+                <td width="80%"><%= f.email_field :email, :autofocus => true %></td>
+            </tr>
+        </table>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th width="20%" align="center">密碼</th>
+                <td width="80%"><%= f.password_field :password %></td>
+            </tr>
+        </table>
+        <a href="#" id="btnLogin">登入</a>
+        
+    </section>
+    <% end %>
+</section>
+</section>
+</body>
+<script type="text/javascript">
+$("#user_password").keydown(function(event){
+    if(event.keyCode == 13){
+        $("#btnLogin").trigger("click");        
+    }
+});
+$("#btnLogin").click(function(){
+    $("#new_user").submit();
+});
+</script>
+</html>
