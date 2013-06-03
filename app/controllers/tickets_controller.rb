@@ -47,6 +47,7 @@ class TicketsController < ApplicationController
   end
 
   def create
+
     @ticket = Ticket.new(params[:ticket])
     @ticket.reporter = current_user.id
     @ticket.cc = params[:cc].to_json
@@ -54,7 +55,7 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
-        params[:tag].each do |tag|
+        params[:tag] && params[:tag].each do |tag|
           @tickettag = Tickettag.new
           @tickettag.ticket_id = @ticket.id
           @tickettag.tag_id = tag

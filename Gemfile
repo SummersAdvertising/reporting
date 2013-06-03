@@ -44,6 +44,5 @@ gem 'jquery-ui-rails'
 # Deploy with Capistrano
 gem 'capistrano'
 
-gem 'therubyracer'
 # To use debugger
 # gem 'debugger'

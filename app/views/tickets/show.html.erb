@@ -36,7 +36,7 @@
 					<a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
 					<% end %>  ，<% end %>共有<a><%= @ticket.tracks.count %></a>則<a>留言</a>
 				</div>
-        		<div class="deadline">期限至<a><%= @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
+        		<div class="deadline">期限至<a><%= @ticket.deadline && @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
         	</div>
         </div>
         <!--content-->
@@ -86,7 +86,7 @@
     			<div class="deadline">
     				<table width="100%" border="0" cellspacing="0" cellpadding="0">
     					<tr>
-    						<td class="date" width="19"><%= f.text_field :deadline, :placeholder => "選擇期限", :autocomplete => "off", :value => @ticket.deadline.strftime("%Y-%m-%d") %></td>
+    						<td class="date" width="19"><%= f.text_field :deadline, :placeholder => "選擇期限", :autocomplete => "off", :value => @ticket.deadline.strftime("%Y-%m-%d") if @ticket.deadline %></td>
     						<td width="1%">&nbsp;</td>
     						<td class="note" width="80%"><%= f.text_field :period, :placeholder => "備註欄", :autocomplete => "off" %></td>
     					</tr>
@@ -206,7 +206,7 @@ $( "#ticket_deadline" ).change(function(){
 
   //compare the date
   if(new Date($(this).val()) <= new Date()){
-    $(this).val('<%= @ticket.deadline.strftime("%Y-%m-%d") %>');
+    $(this).val('<%= @ticket.deadline.strftime("%Y-%m-%d") if @ticket.deadline %>');
     alert("期限日期不能為過去的日期");
   }
 });
