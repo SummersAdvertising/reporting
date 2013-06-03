@@ -7,4 +7,7 @@ class Ticket < ActiveRecord::Base
 
   has_many :tickettags, :dependent => :destroy
   has_many :tags, :through => :tickettags
+
+  has_many :ticketccs, :dependent => :destroy
+  has_many :users, :through => :ticketccs
 end

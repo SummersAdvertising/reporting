@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528111544) do
+ActiveRecord::Schema.define(:version => 20130603030710) do
 
   create_table "logs", :force => true do |t|
     t.string   "actor"
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20130528111544) do
     t.string   "action"
     t.string   "type"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subscribes", :force => true do |t|
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(:version => 20130528111544) do
     t.string   "name"
     t.string   "status"
     t.integer  "count"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "ticketccs", :force => true do |t|
+    t.integer  "ticket_id"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

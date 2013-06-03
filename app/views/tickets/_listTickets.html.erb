@@ -22,7 +22,7 @@
         
         <a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
         <% end %> 
-        ，<% end %> 共有<a href="<%= ticket_path(ticket) %>"><%= ticket.tracks.count %></a>則留言</div>
+        ，<% end %> 共有<a href="<%= ticket_path(ticket) %>"><%= ticket.tracks.count(:conditions => ["status = ?", "track"]) %></a>則<a href="<%= ticket_path(ticket) %>">留言</a></div>
     </div>
   </div>
   <!--content--> 

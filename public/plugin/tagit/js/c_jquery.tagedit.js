@@ -51,8 +51,9 @@
 		*/
 		options = $.extend(true, {
 			// default options here
-			allowSelfNew: true,
+			recordChange: false,
 			tagShowValue: true,
+			allowSelfNew: true,
 			autocompleteURL: null,
 			deletedPostfix: '-d',
 			addedPostfix: '-a',
@@ -63,9 +64,8 @@
 			direction: 'ltr',
 			animSpeed: 500,
 			autocompleteOptions: {
-				minLength: 0,
 				select: function( event, ui ) {
-					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id, ui.item.label]);
+					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id, ui.item.label, ui.item.value]);
 					return false;
 				}
 			},
@@ -128,10 +128,11 @@
 				if(element_name && element_name.length == 4 && (options.deleteEmptyItems == false || $(this).val().length > 0)) {
 					if(element_name[1].length > 0) {
 						var elementId = typeof element_name[2] != 'undefined'? element_name[2]: '';
+						var tag = JSON.parse($(this).val());
 
 						html += '<li class="tagedit-listelement tagedit-listelement-old">';
-						html += '<span dir="'+options.direction+'">' + $(this).val() + '</span>';
-						html += '<input type="hidden" name="'+baseName+'['+elementId+']" value="'+$(this).val()+'" />';
+						html += '<span dir="'+options.direction+'">' + tag.label + '</span>';
+						html += '<input type="hidden" name="'+baseName+'['+elementId+']" value="'+ tag.value +'" />';
 						html += '<a class="tagedit-close" title="'+options.texts.removeLinkTitle+'">x</a>';
 						html += '</li>';
 					}
@@ -163,15 +164,15 @@
 				// Set function on the input
 				.find('#tagedit-input')
 					.each(function() {
-						$(this).autoGrowInput({comfortZone: 15, minWidth: 15, maxWidth: 20000});
+						$(this).autoGrowInput({comfortZone: 150, minWidth: 15, maxWidth: 20000});
 
 						// Event ist triggert in case of choosing an item from the autocomplete, or finish the input
-						$(this).bind('transformToTag', function(event, id, label) {
+						$(this).bind('transformToTag', function(event, id, label, value) {
 							var oldValue = (typeof id != 'undefined' && id.length > 0);
 
 							var checkAutocomplete = oldValue == true? false : true;
 							// check if the Value ist new
-							var isNewResult = isNew((id? id.toString():$(this).val()), checkAutocomplete);
+							var isNewResult = isNew($(this).val(), checkAutocomplete);
 							if(isNewResult[0] === true || (isNewResult[0] === false && typeof isNewResult[1] == 'string')) {
 
 								if(oldValue == false && typeof isNewResult[1] == 'string') {
@@ -181,14 +182,15 @@
 
 								if(options.allowAdd == true || oldValue) {
 									// Make a new tag in front the input
+
 									html = '<li class="tagedit-listelement tagedit-listelement-old">';
-									html += '<span dir="'+options.direction+'">' + (id? (options.tagShowValue? $(this).val() : label) : $(this).val()) + '</span>';
-									
-									
-									var name = oldValue? baseName + '['+id+options.addedPostfix+']' : baseName + (id? "":"new") + '[]';
-									html += '<input type="hidden" name="'+name+'" value="'+(id? id:$(this).val())+'" />';
+									html += '<span dir="'+options.direction+'">' + ((options.tagShowValue? value : label) || $(this).val()) + '</span>';
+									var name = oldValue? baseName + '['+id+options.addedPostfix+']' : baseName + '[]';
+									html += '<input type="hidden" name="'+name+'" value="'+ (options.tagShowValue? label : value) +'" />';
 									html += '<a class="tagedit-close" title="'+options.texts.removeLinkTitle+'">x</a>';
 									html += '</li>';
+
+									console.log("add", value);
 
 									$(this).parent().before(html);
 								}
@@ -211,6 +213,8 @@
 										var elementToRemove = elements.find('li.tagedit-listelement-old').last();
 										elementToRemove.fadeOut(options.animSpeed, function() {elementToRemove.remove();})
 										event.preventDefault();
+
+										console.log("remove",elementToRemove.find("input:first").val());
 										return false;
 									}
 									break;
@@ -229,13 +233,14 @@
 							if($.inArray(code, options.breakKeyCodes) > -1) {
 								if(options.allowSelfNew){
 									if($(this).val().length > 0 && $('ul.ui-autocomplete #ui-active-menuitem').length == 0) {
-										$(this).trigger('transformToTag');
-									}
+									$(this).trigger('transformToTag');
+								}
 								}
 								else{
 									alert(options.texts.notInList);
 									$(this).val("");
 								}
+								
 							event.preventDefault();
 							return false;
 							}
@@ -420,13 +425,12 @@
             var compareValue = options.checkNewEntriesCaseSensitive == true? value : value.toLowerCase();
 
 			var isNew = true;
-			elements.find('li.tagedit-listelement-old input:hidden').each(function() {
-                var elementValue = options.checkNewEntriesCaseSensitive == true? $(this).val() : $(this).val().toLowerCase();
+			elements.find('li.tagedit-listelement-old span').each(function() {
+                var elementValue = options.checkNewEntriesCaseSensitive == true? $(this).text() : $(this).text().toLowerCase();
+                
 				if(elementValue == compareValue) {
 					isNew = false;
 				}
-
-				console.log(elementValue, compareValue);
 			});
 
 			if (isNew == true && checkAutocomplete == true && options.autocompleteOptions.source != false) {
@@ -458,7 +462,8 @@
                 
 				// If there is an entry for that already in the autocomplete, don't use it (Check could be case sensitive or not)
 				for (var i = 0; i < result.length; i++) {
-                    var label = options.checkNewEntriesCaseSensitive == true? result[i].label : result[i].label.toLowerCase();
+					var label = options.checkNewEntriesCaseSensitive == true? result[i].label : result[i].label.toLowerCase();
+
 					if (label == compareValue) {
 						isNew = false;
 						autoCompleteId = result[i].id;

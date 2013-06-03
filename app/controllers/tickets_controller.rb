@@ -47,6 +47,7 @@ class TicketsController < ApplicationController
   end
 
   def create
+    exit
 
     @ticket = Ticket.new(params[:ticket])
     @ticket.reporter = current_user.id
@@ -75,10 +76,9 @@ class TicketsController < ApplicationController
   def update
     
     @ticket = Ticket.find(params[:id])
-    @ccDel = @ticket.cc
-    @ccNew = (params[:cc].to_json)
-
-    return render :text => @ccNew
+    @ccDel = JSON.parse(@ticket.cc)
+    @ccNew = params[:cc]
+    return render :text => @ticket.tags.to_json
     exit
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])

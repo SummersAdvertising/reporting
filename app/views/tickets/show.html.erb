@@ -7,7 +7,7 @@
 
 		<% if @ticket.status == "open" %>
 		<a href="#" id="off" title="關閉此回報"><img src="/images/tool-4.png"></a>
-		<!-- <a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a> -->
+		<a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a>
 		<% end %>
 		
 		<%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除" %>
