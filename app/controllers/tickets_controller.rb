@@ -47,8 +47,6 @@ class TicketsController < ApplicationController
   end
 
   def create
-    exit
-
     @ticket = Ticket.new(params[:ticket])
     @ticket.reporter = current_user.id
     @ticket.cc = params[:cc].to_json
@@ -64,6 +62,19 @@ class TicketsController < ApplicationController
           @tickettag.save
         end
 
+        params[:tagnew] && params[:tagnew].each do |tag|
+          @tag = Tag.new
+          @tag.name = tag
+
+          if(@tag.save)
+            @tickettag = Tickettag.new
+            @tickettag.ticket_id = @ticket.id
+            @tickettag.tag_id = @tag.id
+
+            @tickettag.save
+          end
+        end
+
         format.html { redirect_to root_path, notice: 'ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
@@ -74,7 +85,7 @@ class TicketsController < ApplicationController
   end
 
   def update
-    
+    exit
     @ticket = Ticket.find(params[:id])
     @ccDel = JSON.parse(@ticket.cc)
     @ccNew = params[:cc]
@@ -89,9 +100,6 @@ class TicketsController < ApplicationController
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def compare
   end
 
   def destroy
@@ -140,7 +148,14 @@ class TicketsController < ApplicationController
     @track = @ticket.tracks.new
     @track.status = "log"
     @track.actor = current_user.id
-    @track.comment = "關閉該回報，原因："+params[:track]["comment"]+"。"
+    @track.comment = "關閉該回報"
+
+    @track.save
+
+    @track = @ticket.tracks.new
+    @track.status = "track"
+    @track.actor = current_user.id
+    @track.comment = "關閉原因："+params[:track]["comment"]+"。"
 
     @track.save
 

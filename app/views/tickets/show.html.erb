@@ -10,7 +10,7 @@
 		<a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a>
 		<% end %>
 		
-		<%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除" %>
+		<%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除", data: { confirm: '確定刪除?' } %>
 	</div>
 
 	<div class="box box-show">
@@ -31,10 +31,9 @@
         		<!--tag-->
         		<p><%= @ticket.description %></p>
         		<div class="cc"><% if @ticket.cc != "null" %>標記:
-					<% JSON.parse(@ticket.cc).each do |cc| %>
-					<% @cc = cc.split(/ /) %>
-					<a href="mailto:<%= @cc[1] %>"><%= @cc[0] %></a>
-					<% end %>  ，<% end %>共有<a><%= @ticket.tracks.count %></a>則<a>留言</a>
+					<% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
+					<a href="mailto:<%= cc.email %>"><%= cc.username %></a>
+					<% end %>  ，<% end %>共有<a><%= @ticket.tracks.count(:conditions => ["status = ?", "track"]) %></a>則<a>留言</a>
 				</div>
         		<div class="deadline">期限至<a><%= @ticket.deadline && @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
         	</div>
@@ -63,7 +62,7 @@
     					<td width="1%">&nbsp;</td>
     					<td class="tagmod" width="81%"><!--這裡放TAGMOD-->
     						<% @ticket.tags.each do |tag| %>
-    						<input class="tagAC" type="text" name="tag[]" value='{"label": "<%= tag.name %>", "value": "<%= tag.id %>"}' />
+    						<input class="tagAC" type="text" name="tag[]" value='{"value": "<%= tag.name %>", "id": "<%= tag.id %>"}' />
     						<% end %>
     						
     					</td>
@@ -75,9 +74,8 @@
     				<div class="tagmod">
     					<!--這裡放TAGMOD-->
     					<% if @ticket.cc != "null" %>
-    					<% JSON.parse(@ticket.cc).each do |cc| %>
-    					<% @cc = cc.split(/ /) %>
-    					<input class="userAC" type="text" name="cc[]" value='{"label": "<%= @cc[0] %>", "value": "<%= cc %>"}' />
+    					<% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
+    					<input class="userAC" type="text" name="cc[]" value='{"id": "<%= cc.id %>", "value": "<%= cc.username %>"}' />
     					<% end %>
     					<% end %>
     				</div>

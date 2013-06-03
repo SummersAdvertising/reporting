@@ -129,9 +129,11 @@
 					if(element_name[1].length > 0) {
 						var elementId = typeof element_name[2] != 'undefined'? element_name[2]: '';
 
+						var element = JSON.parse($(this).val());
+
 						html += '<li class="tagedit-listelement tagedit-listelement-old">';
-						html += '<span dir="'+options.direction+'">' + $(this).val() + '</span>';
-						html += '<input type="hidden" name="'+baseName+'['+elementId+']" value="'+$(this).val()+'" />';
+						html += '<span dir="'+options.direction+'">' + element.value + '</span>';
+						html += '<input type="hidden" name="'+baseName+'['+elementId+']" value="'+element.id+'" />';
 						html += '<a class="tagedit-close" title="'+options.texts.removeLinkTitle+'">x</a>';
 						html += '</li>';
 					}

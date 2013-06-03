@@ -51,7 +51,6 @@
 		*/
 		options = $.extend(true, {
 			// default options here
-			recordChange: false,
 			tagShowValue: true,
 			allowSelfNew: true,
 			autocompleteURL: null,
@@ -233,8 +232,8 @@
 							if($.inArray(code, options.breakKeyCodes) > -1) {
 								if(options.allowSelfNew){
 									if($(this).val().length > 0 && $('ul.ui-autocomplete #ui-active-menuitem').length == 0) {
-									$(this).trigger('transformToTag');
-								}
+										$(this).trigger('transformToTag');
+									}
 								}
 								else{
 									alert(options.texts.notInList);
