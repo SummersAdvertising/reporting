@@ -16,7 +16,7 @@
       </ul>
       <!--tag-->
       <p><%= ticket.description %></p>
-      <div class="cc"><%if ticket.cc != "null" %>標記:
+      <div class="cc"><% if ticket.cc != "null" && JSON.parse(ticket.cc).length>0 %>標記:
         <% User.find_all_by_id(JSON.parse(ticket.cc)).each do |cc| %>        
         <a href="mailto:<%= cc.email %>"><%= cc.username %></a>
         <% end %> 

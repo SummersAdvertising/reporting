@@ -63,7 +63,6 @@
 			direction: 'ltr',
 			animSpeed: 500,
 			autocompleteOptions: {
-				minLength: 0,
 				select: function( event, ui ) {
 					$(this).val(ui.item.value).trigger('transformToTag', [ui.item.id, ui.item.label]);
 					return false;
@@ -156,7 +155,7 @@
 			// put an input field at the End
 			// Put an empty element at the end
 			html = '<li class="tagedit-listelement tagedit-listelement-new">';
-			html += '<input type="text" name="'+baseName+'[]" value="" id="tagedit-input" disabled="disabled" class="tagedit-input-disabled" dir="'+options.direction+'" placeholder="'+options.texts.placeholder+'"/>';
+			html += '<input type="text" name="'+baseName+'[]" value="" id="tagedit-input" dir="'+options.direction+'" placeholder="'+options.texts.placeholder+'"/>';
 			html += '</li>';
 			html += '</ul>';
 
@@ -254,7 +253,8 @@
 						.blur(function() {
 							if($(this).val().length == 0) {
 								// disable the field to prevent sending with the form
-								$(this).attr('disabled', 'disabled').addClass('tagedit-input-disabled');
+								//$(this).attr('disabled', 'disabled').addClass('tagedit-input-disabled');
+								$(this).val("");
 							}
 							else {
 								// Delete entry after a timeout
@@ -294,6 +294,7 @@
 					}
 					return false;
 				})
+				.trigger("focus");
 		}
 
 		/**

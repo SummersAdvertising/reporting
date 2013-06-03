@@ -85,13 +85,38 @@ class TicketsController < ApplicationController
   end
 
   def update
-    exit
     @ticket = Ticket.find(params[:id])
-    @ccDel = JSON.parse(@ticket.cc)
-    @ccNew = params[:cc]
-    return render :text => @ticket.tags.to_json
-    exit
+
+
+
+    
+    begin
+      @ccOld = JSON.parse(@ticket.cc)
+    rescue
+      @ccOld = Array.new
+    end
+    
+    @ccDelete = @ccOld - (params[:cc]||Array.new)
+    @ccCreate = (params[:cc]||Array.new) - @ccOld
+
+    if(@ccDelete.length > 0)
+      @msg = "刪除標記"
+      User.find_all_by_id(@ccDelete).each do |user| 
+        @msg = @msg+ " "+user.username
+      end
+      newTrack("log", @msg)
+    end
+
+    if(@ccCreate.length > 0)
+      @msg = "新增標記了"
+      User.find_all_by_id(@ccCreate).each do |user|
+        @msg = @msg+ " "+user.username
+      end
+      newTrack("log", @msg)
+    end
+
     respond_to do |format|
+      @ticket.cc = (params[:cc]||Array.new).to_json
       if @ticket.update_attributes(params[:ticket])
         format.html { redirect_to @ticket, notice: 'ticket was successfully updated.' }
         format.json { head :no_content }
@@ -103,7 +128,6 @@ class TicketsController < ApplicationController
   end
 
   def destroy
-    
     @ticket = Ticket.find(params[:id])
     @ticket.destroy
 
@@ -126,12 +150,7 @@ class TicketsController < ApplicationController
     @ticket.status = "open"
     @ticket.save
 
-    @track = @ticket.tracks.new
-    @track.status = "log"
-    @track.actor = current_user.id
-    @track.comment = "重新開啟該回報。"
-
-    @track.save
+    newTrack("log", "重新開啟該回報。")
 
     respond_to do |format|
       format.html { redirect_to ticket_path(@ticket) }
@@ -145,24 +164,22 @@ class TicketsController < ApplicationController
     @ticket.status = "close"
     @ticket.save
 
-    @track = @ticket.tracks.new
-    @track.status = "log"
-    @track.actor = current_user.id
-    @track.comment = "關閉該回報"
+    newTrack("log", "關閉該回報")
 
-    @track.save
-
-    @track = @ticket.tracks.new
-    @track.status = "track"
-    @track.actor = current_user.id
-    @track.comment = "關閉原因："+params[:track]["comment"]+"。"
-
-    @track.save
+    newTrack("track", "關閉原因："+params[:track]["comment"]+"。")
 
     respond_to do |format|
       format.html { redirect_to ticket_path(@ticket) }
       format.json { head :no_content }
     end
-    
+  end
+
+  def newTrack(status, comment)
+    @track = @ticket.tracks.new
+    @track.status = status
+    @track.actor = current_user.id
+    @track.comment = comment
+
+    @track.save
   end
 end

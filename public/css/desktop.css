@@ -1,0 +1,78 @@
+
+/*-----------------------------------------------------------------------側欄---*/
+
+aside{left:0;width:300px;box-shadow:2px 0 5px #232A34}
+
+/*-----------------------------------------------------------------------搜尋---*/
+
+#search-text{width:240px}
+
+/*-----------------------------------------------------------------------頁身---*/
+
+article{padding:0 0 0 300px}
+
+/*-----------------------------------------------------------------------頁首---*/
+
+article header{border-bottom:1px solid #333A42;padding:9px 0 0 0}
+
+#aside-ctrl,#tool-ctrl{display:none}
+header h1{width:190px;text-align:left;padding:5px 0 0 50px}
+header .tool{width:350px;text-align:right}
+#tool-list a{margin:0 10px 0 0;background:#878E94;border:1px solid #555859;border-radius:10px;padding:4px 10px}
+#tool-list a:hover{background:#555859}
+
+/*-----------------------------------------------------------------------留言---*/
+
+#msg-list{border-top:1px solid #878E94}
+#msg-list .box{width:90%;max-width:600px;margin:25px}
+
+/*-----------------------------------------------------------------------留言左欄---*/
+
+.box .avator{text-align:center}
+.box .img-border{width:69px;height:69px}
+.box .img-border img{width:65px;height:65px}
+
+/*-----------------------------------------------------------------------留言右欄---*/
+
+#msg-list .content{float:right;width:78%}
+#msg-list .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
+
+/*-----------------------------------------------------------------------留言發文---*/
+
+#msg-list #post{width:90%;max-width:575px;margin:25px 25px 25px 50px;
+border:1px solid #222;border-radius:5px;padding:10px;float:left}
+
+/*-----------------------------------------------------------------------原PO---*/
+
+#original-po .text p{font-size:15px}
+
+/*-----------------------------------------------------------------------回覆發文---*/
+
+#msg-show{border-top:1px solid #878E94}
+#msg-show #post{width:90%;max-width:800px;margin:25px auto 50px auto;
+border:1px solid #222;border-radius:5px;padding:10px;clear:both;position:relative}
+
+/*-----------------------------------------------------------------------回覆---*/
+
+#msg-show .box{width:90%;max-width:650px;margin:40px auto}
+#msg-show .content{float:right;width:78%}
+#msg-show .text p{font-size:15px}
+#msg-show .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
+
+#msg-show .img-border{width:49px;height:49px}
+#msg-show .img-border img{width:45px;height:45px}
+
+/*-----------------------------------------------------------------------主題---*/
+
+#topic-box{margin:30px}
+#topic-list{border-top:1px solid #878E94}
+#topic-list .box{float:left;margin:10px 20px;width:90%;max-width:400px}
+#topic-list .box-show,
+#topic-list .box-edit,
+#topic-list .box-add{padding:15px}
+#topic-list .box-show .color{width:10%}
+#topic-list .box-show .name{width:70%}
+#topic-list .box-show .tool{width:20%}
+
+#topic-list .box-add{background:#333A42}
+
