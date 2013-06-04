@@ -5,12 +5,19 @@ class TicketsController < ApplicationController
       @tickets = Ticket.find(:all,
             :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
-            :order => "created_at ASC")
+            :order => "(case tickets.status
+        when 'open' then 0
+        else 1
+        end),created_at ASC")
     else
       @tickets = Ticket.find(:all,
             :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,
             :select => "tickets.*, topics.name, topics.color, users.username",
-            :order => "(case priority
+            :order => "(case tickets.status
+        when 'open' then 0
+        else 1
+        end),
+        (case priority
         when 'high' then 0
         when 'medium' then 1
         when 'low' then 2
