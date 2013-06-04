@@ -85,11 +85,27 @@ class TicketsController < ApplicationController
   end
 
   def update
+
     @ticket = Ticket.find(params[:id])
 
+    return render :text => params[:ticket][:deadline].blank?
 
+    #return render :text => (params[:ticket][:deadline] + (@ticket.deadline ? @ticket.deadline.strftime("%Y-%m-%d") : ""))
+    if(@ticket.priority != params[:priority])
+      case params[:priority]
+      when "high"
+        @priority = "緊急"
+      when "medium"
+        @priority = "普通"
+      when "low"
+        @priority = "暫緩"
+      else
+        @priority = "普通"
+      end
 
-    
+      newTrack("log", "將優先權調整為："+@priority)
+    end
+
     begin
       @ccOld = JSON.parse(@ticket.cc)
     rescue
@@ -117,6 +133,8 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       @ticket.cc = (params[:cc]||Array.new).to_json
+      @ticket.priority = params[:priority]
+
       if @ticket.update_attributes(params[:ticket])
         format.html { redirect_to @ticket, notice: 'ticket was successfully updated.' }
         format.json { head :no_content }

@@ -1,112 +1,102 @@
 <% if @ticket %>
 <section id="original-po">
-	<div class="tool">
-		<% if @ticket.status == "close" %>
-		<%= link_to image_tag("/images/tool-3.png"), ticket_reopen_path(@ticket), :method => "post", :id=> "on", :title => "開啟此回報" %>
-		<% end %>
+    <div class="tool">
+        <% if @ticket.status == "close" %>
+        <%= link_to image_tag("/images/tool-3.png"), ticket_reopen_path(@ticket), :method => "post", :id=> "on", :title => "開啟此回報" %>
+        <% end %>
 
-		<% if @ticket.status == "open" %>
-		<a href="#" id="off" title="關閉此回報"><img src="/images/tool-4.png"></a>
-		<a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a>
-		<% end %>
-		
-		<%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除", data: { confirm: '確定刪除?' } %>
-	</div>
+        <% if @ticket.status == "open" %>
+        <a href="#" id="off" title="關閉此回報"><img src="/images/tool-4.png"></a>
+        <a href="#" title="編輯" id="tool-edit"><img src="/images/tool-2.png"></a>
+        <% end %>
+        
+        <%= link_to image_tag("/images/tool-1.png"), ticket_path(@ticket), :class=> "s-admin", :method => "delete", :title => "刪除", data: { confirm: '確定刪除?' } %>
+    </div>
 
-	<div class="box box-show">
-		<div class="avator">
-			<div class="img-border"> <img src="/images/avator.jpg"> </div>
-			<div class="name"><%= @ticket.username %></div>
-		</div>
+    <div class="box">
+        <div class="avator">
+            <div class="img-border"> <img src="/images/avator.jpg"> </div>
+            <div class="name"><%= @ticket.username %></div>
+        </div>
         <!--avator-->
-
         <div class="content">
-        	<div class="text">
-        		<ul class="tag">
-        			<li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
-					<% @ticket.tags.each do |tag| %>
-					<li><%= tag.name %></li>
-					<% end %>
-        		</ul>
-        		<!--tag-->
-        		<p><%= @ticket.description %></p>
-        		<div class="cc"><% if @ticket.cc != "null" && JSON.parse(@ticket.cc).length>0 %>標記:
-					<% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
-					<a href="mailto:<%= cc.email %>"><%= cc.username %></a>
-					<% end %>  ，<% end %>共有<a><%= @ticket.tracks.count(:conditions => ["status = ?", "track"]) %></a>則<a>留言</a>
-				</div>
-        		<div class="deadline">期限至<a><%= @ticket.deadline && @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
-        	</div>
+            <div class="text">
+                <ul class="tag">
+                    <li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
+                    <% @ticket.tags.each do |tag| %>
+                    <li><%= tag.name %></li>
+                    <% end %>
+                </ul>
+                <p><%= @ticket.description %></p>
+                <div class="cc"><% if @ticket.cc != "null" && JSON.parse(@ticket.cc).length>0 %>標記:
+                    <% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
+                    <a href="mailto:<%= cc.email %>"><%= cc.username %></a>
+                    <% end %>  ，<% end %>共有<a><%= @ticket.tracks.count(:conditions => ["status = ?", "track"]) %></a>則<a>留言</a>
+                </div>
+                <div class="deadline">期限至<a><%= @ticket.deadline && @ticket.deadline.strftime("%Y-%m-%d") %></a> ，<a><%= @ticket.period.length>0 ?  @ticket.period : "無備註" %></a></div>
+            </div>
         </div>
         <!--content-->
+
+        <div class="edit">
+            <%= form_for(@ticket) do |f| %>
+            <div class="text">
+                <div class="tag">
+                    <div class="tagmod">
+                        <!--這裡放TAGMOD-->
+                        <% @ticket.tags.each do |tag| %>
+                        <input class="tagAC" type="text" name="tag[]" value='{"value": "<%= tag.name %>", "id": "<%= tag.id %>"}' />
+                        <% end %>
+                        <% if @ticket.tags.count == 0 %>
+                        <input class="tagAC" type="text" name="tag[]" value='' />
+                        <% end %>
+                    </div>
+                </div>
+                <p><%= @ticket.description %></p>
+
+                <div class="cc">
+                    <div class="tagmod">
+                        <!--這裡放TAGMOD-->
+                        <% if JSON.parse(@ticket.cc).length>0 && JSON.parse(@ticket.cc)[0].length>0 %>
+                        <% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
+                        <input class="userAC" type="text" name="cc[]" value='{"id": "<%= cc.id %>", "value": "<%= cc.username %>"}' />
+                        <% end %>
+
+                        <% else %>
+                        <input class="userAC" type="text" name="cc[]" value='' />
+                        <% end %>
+                    </div>
+                </div>
+
+                <div class="deadline">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td class="date" width="19"><%= f.text_field :deadline, :placeholder => "選擇期限", :autocomplete => "off", :value => (@ticket.deadline.strftime("%Y-%m-%d") if @ticket.deadline) %></td>
+                            <td width="1%">&nbsp;</td>
+                            <td class="note" width="80%"><%= f.text_field :period, :placeholder => "備註欄", :autocomplete => "off" %></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="switch">
+                    <input id="switch-low" name="priority" type="radio" value="low" <%= "checked" if(@ticket.priority=="low") %>>
+                    <label for="switch-low" onclick="">暫緩</label>
+                    <input id="switch-medium" name="priority" type="radio" value="medium" <%= "checked" if(@ticket.priority=="medium") %>>
+                    <label for="switch-medium" onclick="">普通</label>
+                    <input id="switch-high" name="priority" type="radio" value="high" <%= "checked" if(@ticket.priority=="high") %>>
+                    <label for="switch-high" onclick="">緊急</label>
+                    <span class="slide-button"><a>&nbsp;</a></span>
+                </div>
+
+                <div class="submit">
+                    <a href="#" id = "editSubmit">送出</a>
+                    <a href="#" id = "editCancel">取消</a>
+                </div>
+            </div>
+            <% end %>
+        </div>
     </div>
     <!--box-->
-
-    <div class="box box-edit">
-    	<%= form_for(@ticket) do |f| %>
-    	<div class="avator">
-    		<div class="img-border"> <img src="/images/avator.jpg"> </div>
-    		<div class="name"><%= @ticket.username %></div>
-    	</div>
-    	<!--avator-->
-    	<div class="content">
-    		<div class="text">
-    			<div class="tag">
-    				<div class="tagmod">
-    					<!--這裡放TAGMOD-->
-    					<% @ticket.tags.each do |tag| %>
-    					<input class="tagAC" type="text" name="tag[]" value='{"value": "<%= tag.name %>", "id": "<%= tag.id %>"}' />
-    					<% end %>
-    					<% if @ticket.tags.count == 0 %>
-    					<input class="tagAC" type="text" name="tag[]" value='' />
-    					<% end %>
-    				</div>
-    			</div>
-
-    			<p><%= @ticket.description %></p>
-
-    			<div class="cc">
-    				<div class="tagmod">
-    					<!--這裡放TAGMOD-->
-    					<% if @ticket.cc != "null" && JSON.parse(@ticket.cc).length>0 %>
-    					<% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
-    					<input class="userAC" type="text" name="cc[]" value='{"id": "<%= cc.id %>", "value": "<%= cc.username %>"}' />
-    					<% end %>
-
-    					<% else %>
-    					<input class="userAC" type="text" name="cc[]" value='' />
-    					<% end %>
-    				</div>
-    			</div>
-
-    			<div class="deadline">
-    				<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    					<tr>
-    						<td class="date" width="19"><%= f.text_field :deadline, :placeholder => "選擇期限", :autocomplete => "off", :value => (@ticket.deadline.strftime("%Y-%m-%d") if @ticket.deadline) %></td>
-    						<td width="1%">&nbsp;</td>
-    						<td class="note" width="80%"><%= f.text_field :period, :placeholder => "備註欄", :autocomplete => "off" %></td>
-    					</tr>
-    				</table>
-    			</div>
-    			<div class="switch">
-    				<input id="switch-low" name="switch" type="radio" >
-    				<label for="switch-low" onclick="">暫緩</label>
-    				<input id="switch-medium" name="switch" type="radio" checked >
-    				<label for="switch-medium" onclick="">普通</label>
-    				<input id="switch-high" name="switch" type="radio">
-    				<label for="switch-high" onclick="">緊急</label>
-    				<span class="slide-button"><a>&nbsp;</a></span>
-    			</div>
-    			<div class="submit">
-    				<a href="#" id = "editSubmit">送出</a>
-    				<a href="#" id = "editCancel">取消</a>
-    			</div>
-    		</div>
-    	</div>
-    	<!--content-->
-    </div>
-    <!--box-->
-    <% end %>
 </section>
 <!--original-po-->
 
@@ -192,15 +182,15 @@ function btnOffClick(){
 	}
 	$("#off").remove();
 }
-
-$('#tool-edit').click(function(){
-		$('.box-edit').fadeIn(0)		
-		$('.box-show').fadeOut(0)	
-	})
+$('#original-po .edit').hide()
+ $('#original-po #tool-edit').click(function(){
+  $('#original-po .edit').fadeIn(0)  
+  $('#original-po .content').fadeOut(0) 
+ })
 
 $("#editCancel").click(function(){
-	$('.box-show').fadeIn(0)
-	$('.box-edit').fadeOut(0)	
+	$('#original-po .edit').fadeOut(0)  
+  $('#original-po .content').fadeIn(0) 	
 });
 
 $( "#ticket_deadline" ).datepicker();
