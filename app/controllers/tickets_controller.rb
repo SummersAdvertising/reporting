@@ -127,7 +127,7 @@ class TicketsController < ApplicationController
     @tagCreate = (params[:tag]||Array.new) - @tagOld
 
     if(@tagDelete.length > 0)
-      @msg = "移除"
+      @msg = "移除tag:"
       Tag.find_all_by_id(@tagDelete).each do |tag| 
         @msg = @msg+ " "+tag.name
       end
@@ -135,7 +135,7 @@ class TicketsController < ApplicationController
     end
 
     if(@tagCreate.length > 0 || params[:tagnew])
-      @msg = "新增"
+      @msg = "新增tag:"
       Tag.find_all_by_id(@tagCreate).each do |tag|
         @msg = @msg+ " "+tag.name
       end
