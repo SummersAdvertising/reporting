@@ -88,7 +88,13 @@ class TicketsController < ApplicationController
 
     @ticket = Ticket.find(params[:id])
 
-    return render :text => params[:ticket][:deadline].blank?
+    if(!params[:ticket][:deadline].blank? && !(params[:ticket][:deadline] == (@ticket.deadline ? @ticket.deadline.strftime("%Y-%m-%d") : "")))
+      newTrack("log", "將期限調整為："+params[:ticket][:deadline])
+    end
+
+    if(!params[:ticket][:period].blank? && !(params[:ticket][:period] == @ticket.period))
+      newTrack("log", "修改了備註。")
+    end
 
     #return render :text => (params[:ticket][:deadline] + (@ticket.deadline ? @ticket.deadline.strftime("%Y-%m-%d") : ""))
     if(@ticket.priority != params[:priority])
@@ -111,6 +117,35 @@ class TicketsController < ApplicationController
     rescue
       @ccOld = Array.new
     end
+
+    @tagOld = Array.new
+    @ticket.tags.each do |tag|
+      @tagOld.push(tag.id.to_s)
+    end
+
+    @tagDelete = @tagOld - (params[:tag]||Array.new)
+    @tagCreate = (params[:tag]||Array.new) - @tagOld
+
+    if(@tagDelete.length > 0)
+      @msg = "移除"
+      Tag.find_all_by_id(@tagDelete).each do |tag| 
+        @msg = @msg+ " "+tag.name
+      end
+      newTrack("log", @msg)
+    end
+
+    if(@tagCreate.length > 0 || params[:tagnew])
+      @msg = "新增"
+      Tag.find_all_by_id(@tagCreate).each do |tag|
+        @msg = @msg+ " "+tag.name
+      end
+
+      params[:tagnew] && params[:tagnew].each do |tag|
+        @msg = @msg+ " "+tag
+      end
+      newTrack("log", @msg)
+    end
+
     
     @ccDelete = @ccOld - (params[:cc]||Array.new)
     @ccCreate = (params[:cc]||Array.new) - @ccOld
@@ -126,7 +161,7 @@ class TicketsController < ApplicationController
     if(@ccCreate.length > 0)
       @msg = "新增標記了"
       User.find_all_by_id(@ccCreate).each do |user|
-        @msg = @msg+ " "+user.username
+        @msg = @msg+ " " + user.username
       end
       newTrack("log", @msg)
     end
@@ -134,6 +169,31 @@ class TicketsController < ApplicationController
     respond_to do |format|
       @ticket.cc = (params[:cc]||Array.new).to_json
       @ticket.priority = params[:priority]
+
+      @tickettagDel = Tickettag.where(:ticket_id => @ticket.id).find_all_by_tag_id(@tagDelete)
+      @tickettagDel.each do |tickettag|
+        Tickettag.find(tickettag.id).delete
+      end
+
+      @tagCreate && @tagCreate.each do |tag|
+        @tickettag = Tickettag.new
+        @tickettag.ticket_id = @ticket.id
+        @tickettag.tag_id = tag
+        @tickettag.save
+      end
+
+      params[:tagnew] && params[:tagnew].each do |tag|
+        @tag = Tag.new
+        @tag.name = tag
+
+        if(@tag.save)
+          @tickettag = Tickettag.new
+          @tickettag.ticket_id = @ticket.id
+          @tickettag.tag_id = @tag.id
+
+          @tickettag.save
+        end
+      end
 
       if @ticket.update_attributes(params[:ticket])
         format.html { redirect_to @ticket, notice: 'ticket was successfully updated.' }
