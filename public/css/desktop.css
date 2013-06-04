@@ -64,15 +64,34 @@ border:1px solid #222;border-radius:5px;padding:10px;clear:both;position:relativ
 
 /*-----------------------------------------------------------------------主題---*/
 
-#topic-box{margin:30px}
 #topic-list{border-top:1px solid #878E94}
-#topic-list .box{float:left;margin:10px 20px;width:90%;max-width:400px}
+#topic-box{width:90%;max-width:800px;margin:0 auto}
+#topic-list .box{width:100%;max-width:48%;float:left;margin:1%}
 #topic-list .box-show,
-#topic-list .box-edit,
 #topic-list .box-add{padding:15px}
+#topic-list .box-edit{padding:10px}
+
 #topic-list .box-show .color{width:10%}
 #topic-list .box-show .name{width:70%}
 #topic-list .box-show .tool{width:20%}
 
-#topic-list .box-add{background:#333A42}
+#topic-list .box-add{background:#333A42;max-width:98%;}
+
+/*-----------------------------------------------------------------------使用者---*/
+
+#user-list{border-top:1px solid #878E94}
+
+#user-list .list .avator img{border-radius:50%;width:55px;height:55px;border:1px solid #ddd}
+#user-list .list .avator{width:15%}
+#user-list .list .name{width:10%}
+#user-list .list .userid{width:65%}
+#user-list .list .delete{width:10%}
+
+#user-list .add{width:90%;max-width:800px;margin:20px auto 0 auto;text-align:center;}
+#user-list .add a{font:700 15px 微軟正黑體,"verdana"!important;color:#353940;display:inline-block;background:url(../images/active.jpg) 0 0 repeat-x ;
+text-shadow:0 1px 0 #fff;font:300 13px verdana;height:40px;border-radius:5px;padding:10px 0 0 0;width:100%}
+#user-list .add a img{position:relative;top:3px;margin:0 5px 0 0}
+
+
+
 

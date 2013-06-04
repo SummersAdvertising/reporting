@@ -1,29 +1,55 @@
-<h1>Listing topics</h1>
+<section id="topic-list">
+  <div id="topic-box">
+    <div class="box box-add">
+      <%= form_for(@topic) do |f| %>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="40%"><%= f.text_field :color, :autocomplete => "off", :placeholder => "色碼 HEX 值" %></td>
+          <td width="40%"><%= f.text_field :name, :autocomplete => "off", :placeholder => "專案名稱" %></td>
+          <td width="20%"><a id="submitTopic" href="#">新增</a></td>
+        </tr>
+      </table>
+      <% end %>
+    </div>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Status</th>
-    <th>Count</th>
-    <th>Color</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <% @topics.each do |topic| %>
+    <div class="box">
+      <div class="box-show">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="color"><a style="background:<%= topic.color %>">&nbsp;</a></td>
+            <td class="name"><%= topic.name %></td>
+            <td class="tool"><a href="#" class="edit" title="編輯"><img src="images/tool-2.png"></a> <a href="#" class="delete" title="刪除"><img src="images/tool-1.png"></a></td>
+          </tr>
+        </table>
+      </div>
+      <!--box-show-->
 
-<% @topics.each do |topic| %>
-  <tr>
-    <td><%= topic.name %></td>
-    <td><%= topic.status %></td>
-    <td><%= topic.count %></td>
-    <td><%= topic.color %></td>
-    <td><%= link_to 'Show', topic %></td>
-    <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
-    <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+      <div class="box-edit">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="color"><input name="" type="text" placeholder="色碼 HEX 值"></td>
+            <td class="name"><input name="" type="text" placeholder="專案名稱"></td>
+            <td class="tool"><a href="#"><img src="images/tool-5.png"></a></td>
+          </tr>
+        </table>
+      </div>
+      <!--box-edit--> 
+    </div>
+    <!--box-->
+    <% end %>
 
-<br />
+  </div>
+</section>
 
-<%= link_to 'New Topic', new_topic_path %> | <%= link_to 'Back to root', root_path %>
+<script type="text/javascript">
+$('#topic-list .box-edit').hide();
+$('#topic-list .box-show .edit').click(function(){
+  $(this).parents('.box').children('.box-edit').show();
+  $(this).parents('.box').children('.box-show').hide();
+});
+
+$("#submitTopic").click(function(){
+  $("#new_topic").submit();
+});
+</script>

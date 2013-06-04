@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604034005) do
+ActiveRecord::Schema.define(:version => 20130604094024) do
 
   create_table "logs", :force => true do |t|
     t.string   "actor"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20130604034005) do
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.string   "priority",    :default => "medium"
-    t.text     "cc"
+    t.text     "cc",          :default => "[]"
   end
 
   create_table "tickettags", :force => true do |t|

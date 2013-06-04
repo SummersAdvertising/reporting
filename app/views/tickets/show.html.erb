@@ -57,7 +57,7 @@
                 <div class="cc">
                     <div class="tagmod">
                         <!--這裡放TAGMOD-->
-                        <% if JSON.parse(@ticket.cc).length>0 && JSON.parse(@ticket.cc)[0].length>0 %>
+                        <% if @ticket.cc!="null" && JSON.parse(@ticket.cc).length>0 && JSON.parse(@ticket.cc)[0].length>0 %>
                         <% User.find_all_by_id(JSON.parse(@ticket.cc)).each do |cc| %>
                         <input class="userAC" type="text" name="cc[]" value='{"id": "<%= cc.id %>", "value": "<%= cc.username %>"}' />
                         <% end %>

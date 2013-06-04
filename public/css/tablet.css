@@ -63,3 +63,17 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 #topic-list .box-show .tool{width:15%}
 
 #topic-list .box-add{background:#333A42;position:fixed;bottom:0px;width:100%;border:none;border-radius:0;margin:0}
+
+/*-----------------------------------------------------------------------使用者---*/
+
+#user-list{border-top:1px solid #878E94}
+
+#user-list .list .avator img{border-radius:50%;width:45px;height:45px;border:1px solid #ddd}
+#user-list .list .avator{width:15%}
+#user-list .list .name{width:15%}
+#user-list .list .userid{width:60%}
+#user-list .list .delete{width:10%}
+
+#user-list .add{width:90%;max-width:800px;margin:20px auto 0 auto;text-align:center;}
+#user-list .add a{font:700 15px 微軟正黑體,"verdana"!important;color:#353940;display:inline-block;background:url(../images/active.jpg) 0 0 repeat-x ;
+text-shadow:0 1px 0 #fff;font:300 13px verdana;height:40px;border-radius:5px;padding:10px 0 0 0;width:100%}

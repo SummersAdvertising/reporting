@@ -11,7 +11,7 @@ Reporting::Application.routes.draw do
     resources :tracks, :only => ["create"]
   end
 
-  resources :topics
+  resources :topics, :except => ["new", "show", "edit"]
   resources :subscribes, :only => ["create", "destroy"]
 
   #routes for subscribing topics

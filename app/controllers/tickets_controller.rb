@@ -85,7 +85,6 @@ class TicketsController < ApplicationController
   end
 
   def update
-
     @ticket = Ticket.find(params[:id])
 
     if(!params[:ticket][:deadline].blank? && !(params[:ticket][:deadline] == (@ticket.deadline ? @ticket.deadline.strftime("%Y-%m-%d") : "")))
@@ -96,7 +95,6 @@ class TicketsController < ApplicationController
       newTrack("log", "修改了備註。")
     end
 
-    #return render :text => (params[:ticket][:deadline] + (@ticket.deadline ? @ticket.deadline.strftime("%Y-%m-%d") : ""))
     if(@ticket.priority != params[:priority])
       case params[:priority]
       when "high"
@@ -196,7 +194,7 @@ class TicketsController < ApplicationController
       end
 
       if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to @ticket, notice: 'ticket was successfully updated.' }
+        format.html { redirect_to ticket_path(@ticket), notice: 'ticket was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
