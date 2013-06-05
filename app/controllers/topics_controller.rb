@@ -17,7 +17,7 @@ class TopicsController < ApplicationController
         format.html { redirect_to topics_path, notice: 'Topic was successfully created.' }
         format.json { render json: @topic, status: :created, location: @topic }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to topics_path }
         format.json { render json: @topic.errors, status: :unprocessable_entity }
       end
     end
@@ -28,10 +28,10 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        format.html { redirect_to @topic, notice: 'Topic was successfully updated.' }
+        format.html { redirect_to topics_path, notice: 'Topic was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to topics_path }
         format.json { render json: @topic.errors, status: :unprocessable_entity }
       end
     end
@@ -42,7 +42,7 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to topics_url }
+      format.html { redirect_to topics_path }
       format.json { head :no_content }
     end
   end

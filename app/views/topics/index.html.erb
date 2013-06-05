@@ -26,13 +26,15 @@
       <!--box-show-->
 
       <div class="box-edit">
+        <%= form_for(topic) do |f| %>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td class="color"><input name="" type="text" placeholder="色碼 HEX 值"></td>
-            <td class="name"><input name="" type="text" placeholder="專案名稱"></td>
-            <td class="tool"><a href="#"><img src="images/tool-5.png"></a></td>
+            <td class="color"><%= f.text_field :color, :autocomplete => "off", :placeholder => "色碼 HEX 值" %></td>
+            <td class="name"><%= f.text_field :name, :autocomplete => "off", :placeholder => "專案名稱" %></td>
+            <td class="tool"><a href="#" class="submit"><img src="images/tool-5.png"></a></td>
           </tr>
         </table>
+        <% end %>
       </div>
       <!--box-edit--> 
     </div>
@@ -47,9 +49,13 @@ $('#topic-list .box-edit').hide();
 $('#topic-list .box-show .edit').click(function(){
   $(this).parents('.box').children('.box-edit').show();
   $(this).parents('.box').children('.box-show').hide();
+  $('#topic-list .box-show .edit').unbind();
 });
 
 $("#submitTopic").click(function(){
   $("#new_topic").submit();
+});
+$(".submit").click(function(){
+  $(this).parents("form:first").submit();
 });
 </script>

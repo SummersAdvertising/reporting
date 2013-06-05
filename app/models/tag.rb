@@ -1,7 +1,7 @@
 class Tag < ActiveRecord::Base
   attr_accessible :count, :name, :status
-  
   validates_presence_of :name
+  validates :name, :uniqueness => true
   
   has_many :tickettags
   has_many :tickets, :through => :tickettags
