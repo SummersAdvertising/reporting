@@ -22,7 +22,7 @@
         <div class="content">
             <div class="text">
                 <ul class="tag">
-                    <li class="tag-topic" style="background:<%= @ticket.color if(@ticket.color) %>"><%= @ticket.name %></li>
+                    <li class="tag-topic" style="background:<%= @ticket.color ? @ticket.color : '#7573FF' %>"><%= @ticket.name ? @ticket.name : "其他" %></li>
                     <% @ticket.tags.each do |tag| %>
                     <li><%= tag.name %></li>
                     <% end %>
