@@ -192,7 +192,7 @@ $.ajax({
           for(var item in topics){
             if($(this).val() == topics[item].value)
             {
-              $("#ticketTopic").val(JSON.stringify({id: topics[item].id, value: topics[item].value})); 
+              $("#ticketTopic").val(topics[item].id); 
               break;
             }
             if(item == topics.length-1){
