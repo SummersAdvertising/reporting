@@ -19,7 +19,10 @@
           <tr>
             <td class="color"><a style="background:<%= topic.color %>">&nbsp;</a></td>
             <td class="name"><%= topic.name %></td>
-            <td class="tool"><a href="#" class="edit" title="編輯"><img src="images/tool-2.png"></a> <a href="#" class="delete" title="刪除"><img src="images/tool-1.png"></a></td>
+            <td class="tool">
+              <a href="#" class="edit" title="編輯"><img src="images/tool-2.png"></a>
+              <%= link_to image_tag("/images/tool-1.png"), topic_path(topic), :class=> "delete", :method => "delete", :title => "刪除", data: { confirm: '確定刪除?' } %>
+            </td>
           </tr>
         </table>
       </div>

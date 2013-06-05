@@ -39,7 +39,11 @@ class TopicsController < ApplicationController
 
   def destroy
     @topic = Topic.find(params[:id])
-    @topic.destroy
+    
+    if(@topic.destroy)
+      Subscribe.delete(Subscribe.where(:topic_id => params[:id]))
+      Ticket.update_all( "topic_id = 0", ("topic_id = "+params[:id]) )
+    end
 
     respond_to do |format|
       format.html { redirect_to topics_path }

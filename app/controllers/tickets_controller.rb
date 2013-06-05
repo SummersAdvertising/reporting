@@ -24,7 +24,6 @@ class TicketsController < ApplicationController
         else 3
         end), deadline ASC, created_at ASC")
     end
-
     @ticket = Ticket.new
     
   end
