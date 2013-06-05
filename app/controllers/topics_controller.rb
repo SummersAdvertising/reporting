@@ -41,7 +41,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     
     if(@topic.destroy)
-      Subscribe.delete(Subscribe.where(:topic_id => params[:id]))
+      Subscribe.delete(["topic_id = ?", params[:id]])
       Ticket.update_all( "topic_id = 0", ("topic_id = "+params[:id]) )
     end
 
