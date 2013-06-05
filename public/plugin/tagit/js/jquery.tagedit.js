@@ -169,10 +169,10 @@
 						// Event ist triggert in case of choosing an item from the autocomplete, or finish the input
 						$(this).bind('transformToTag', function(event, id, label) {
 							var oldValue = (typeof id != 'undefined' && id.length > 0);
-
 							var checkAutocomplete = oldValue == true? false : true;
 							// check if the Value ist new
 							var isNewResult = isNew((id? id.toString():$(this).val()), checkAutocomplete);
+
 							if(isNewResult[0] === true || (isNewResult[0] === false && typeof isNewResult[1] == 'string')) {
 
 								if(oldValue == false && typeof isNewResult[1] == 'string') {
@@ -427,8 +427,12 @@
 				if(elementValue == compareValue) {
 					isNew = false;
 				}
-
-				console.log(elementValue, compareValue);
+			});
+			elements.find('li.tagedit-listelement-old span').each(function() {
+                var elementValue = options.checkNewEntriesCaseSensitive == true? $(this).text() : $(this).text().toLowerCase();
+				if(elementValue == compareValue) {
+					isNew = false;
+				}
 			});
 
 			if (isNew == true && checkAutocomplete == true && options.autocompleteOptions.source != false) {
@@ -459,14 +463,19 @@
 				}
                 
 				// If there is an entry for that already in the autocomplete, don't use it (Check could be case sensitive or not)
-				for (var i = 0; i < result.length; i++) {
+				if(!isNew){
+					for (var i = 0; i < result.length; i++) {
                     var label = options.checkNewEntriesCaseSensitive == true? result[i].label : result[i].label.toLowerCase();
+					
 					if (label == compareValue) {
 						isNew = false;
 						autoCompleteId = result[i].id;
 						break;
 					}
 				}
+				}
+				
+				
 			}
 
 			return new Array(isNew, autoCompleteId);

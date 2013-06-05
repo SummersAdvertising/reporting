@@ -231,7 +231,7 @@ position:relative;top:10px;padding:0 15px;font-size:12px}
 #topic-list .box-add a{width:100%;display:block;border-radius:5px;border:none;height:31px;text-align:center;padding:8px 0 0 0;
 ;background:url(../images/list.jpg) 0 bottom repeat-x;cursor:pointer;font:300 13px 微軟正黑體,"verdana";color:#555;text-shadow:0 1px 0 #fff}
 
-/*-----------------------------------------------------------------------使用者---*/
+/*-----------------------------------------------------------------------使用者列表---*/
 
 #user-list{padding:5% 0}
 #user-list .list{border:1px solid #ccc;border-radius:5px;background:#fff;width:90%;max-width:800px;margin:0 auto}
@@ -240,6 +240,28 @@ position:relative;top:10px;padding:0 15px;font-size:12px}
 #user-list tr:nth-child(2n) {background:#F9F9F9}
 #user-list .list a{opacity:.5;filter:alpha(opacity=50)}
 #user-list .list a:hover{text-decoration:underline;opacity:1;filter:alpha(opacity=100)}
+
+/*-----------------------------------------------------------------------使用者新增&編輯---*/
+
+#user-box{overflow:hidden;width:90%;margin:0 auto;padding:5% 0}
+
+#user-edit .avator{position:relative;overflow:hidden;width:90px;height:90px}
+#user-edit .avator a{position:absolute;display:block;width:100%;height:100%;background:rgba(0,0,0,.5);border-radius:50%;
+padding:40px 0 0 0;color:#fff;text-align:center;text-shadow:0 -1px 0 #333A42;left:0;left:105px;
+-webkit-transform:rotate(50deg);-moz-transform:rotate(50deg)}
+#user-edit .avator img{width:100%;height:auto;border-radius:50%;border:3px solid #fff}
+#user-edit .avator:hover a{left:0px;-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg)}
+
+#user-edit .form{margin:0 auto}
+#user-edit .text{margin:0 0 20px 0;color:#fff;font-size:13px;text-shadow:0 -1px 0 #333A42}
+#user-edit .text input{width:100%;border-radius:5px;border:none;padding:10px;
+box-shadow:inset 0 2px 5px #ccc;border-top:1px solid #61676D;border-bottom:1px solid #8C959D}
+
+#user-edit .submit{text-align:right;clear:both;padding:5% 0 0 0}
+#user-edit .submit a{display:inline-block;width:75px;height:30px;background:url(../images/list.jpg) 0 bottom repeat-x;
+ text-align:center;padding:7px 0 0 0;color:#555;text-shadow:0 1px 0 #fff;border-radius:5px;margin:0 0 0 10px}
+#user-edit .submit a:hover{background:url(../images/active.jpg) 0 top repeat-x}
+#user-edit #submit-save{background:#20BBD7;color:#eee;text-shadow:0 -1px 0 #1C9AB1}
 
 /*-----------------------------------------------------------------------動畫---*/
 
@@ -259,34 +281,6 @@ position:relative;top:10px;padding:0 15px;font-size:12px}
 	0% { top:-40px }	
 	100% {top:-30px }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*-----------------------------------------------------------------------開關---
 .onoffswitch {position:relative;width:85px;float:left;

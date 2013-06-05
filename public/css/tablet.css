@@ -77,3 +77,8 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 #user-list .add{width:90%;max-width:800px;margin:20px auto 0 auto;text-align:center;}
 #user-list .add a{font:700 15px 微軟正黑體,"verdana"!important;color:#353940;display:inline-block;background:url(../images/active.jpg) 0 0 repeat-x ;
 text-shadow:0 1px 0 #fff;font:300 13px verdana;height:40px;border-radius:5px;padding:10px 0 0 0;width:100%}
+
+/*-----------------------------------------------------------------------使用者新增&編輯---*/
+
+#user-edit .avator{margin:5% auto 10% auto}
+#user-edit .text{width:50%;float:left}

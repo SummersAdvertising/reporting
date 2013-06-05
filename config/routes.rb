@@ -1,8 +1,5 @@
 Reporting::Application.routes.draw do
-  devise_for :users,
-  :controllers => {
-    :sessions => "sessions"
-  }
+  devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registrations" }
 
   resources :tickets, :except => ["new"] do
     match "/reopen" => "tickets#reopen", :via => "post", :as => "reopen"

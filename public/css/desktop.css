@@ -92,6 +92,13 @@ border:1px solid #222;border-radius:5px;padding:10px;clear:both;position:relativ
 text-shadow:0 1px 0 #fff;font:300 13px verdana;height:40px;border-radius:5px;padding:10px 0 0 0;width:100%}
 #user-list .add a img{position:relative;top:3px;margin:0 5px 0 0}
 
+/*-----------------------------------------------------------------------使用者新增&編輯---*/
 
+#user-edit{border-top:1px solid #878E94}
+#user-box{max-width:800px}
 
+#user-edit .avator{float:left}
+#user-edit .form{width:85%;float:right}
+
+#user-edit .text{width:50%;float:left}
 

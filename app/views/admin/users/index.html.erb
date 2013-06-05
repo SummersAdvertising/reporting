@@ -1,16 +1,21 @@
-<h1>Listing users</h1>
-
-<table>
-  <tr>
-    <th>username</th>
-    <th>email</th>
-  </tr>
-
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.username %></td>
-    <td><%= user.email %></td>
-  </tr>
-<% end %>
-</table>
-
+<section id="user-list">
+	<div class="list">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th class="avator">&nbsp;</th>
+				<th class="name">名稱</th>
+				<th class="userid" align="left">帳號</th>
+				<th class="delete">刪除</th>
+			</tr>
+			<% @users.each do |user| %>
+			<tr>
+				<td align="center" class="avator"><img src="/images/avator.jpg"></td>
+				<td align="center" class="name"><%= user.username %></td>
+				<td class="userid"><%= user.email %></td>
+				<td align="center"><a href="#"><img src="/images/tool-1.png"></a></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+	<div class="add"><a href="#"> 新增使用者</a></div>
+</section>
