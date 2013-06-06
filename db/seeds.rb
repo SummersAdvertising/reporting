@@ -20,3 +20,4 @@ user11 = User.create :username => "玲瑩", :email => "lychen@summers.com.tw", :
 user12 = User.create :username => "Hana", :email => "kobanae@summers.com.tw", :password => "123", :password_confirmation => '123'
 user13 = User.create :username => "聿琳", :email => "tc@summers.com.tw", :password => "123", :password_confirmation => '123'
 user14 = User.create :username => "Yuzhe", :email => "yuzhe@summers.com.tw", :password => "123", :password_confirmation => '123'
+user15 = User.create :username => "ADMIN", :email => "admin@summers.com.tw", :password => "123", :password_confirmation => '123', :role => "admin"
