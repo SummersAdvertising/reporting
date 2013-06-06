@@ -1,9 +1,8 @@
 class AdminController < ApplicationController
-	before_filter :authenticate_user!
+	before_filter :is_admin
 	
 	def index
 		respond_to do | format |
 		end
-	end
-	
+	end	
 end

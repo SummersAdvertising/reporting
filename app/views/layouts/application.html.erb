@@ -260,6 +260,11 @@ $.ajax({
 $("#topic-button").click(function(){
   $("#topicForm").submit();
 });
+
+<% if flash[:IDnotice] %>
+alert("<%= flash[:IDnotice] %>");
+<% end %>
+
 </script>
 
 </html>

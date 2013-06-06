@@ -10,8 +10,8 @@
 <meta name="Robots" content="index,follow"/>
 <meta http-equiv="content-language" content="zh-TW" />
 <title>夏天廣告回報系統</title>
-<link rel="stylesheet" type="text/css" href="/assets/front/reset">
-<link rel="stylesheet" type="text/css" href="/assets/login/login">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/login.css">
 
 <%= javascript_include_tag "login" %>
 </head>
@@ -21,20 +21,21 @@
 <section id="vert">
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 	<section id="login">
+         <h1>夏天廣告回報系統</h1>
+      <div class="form">      
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <th width="20%" align="center">帳號</th>
-                <td width="80%"><%= f.email_field :email, :autofocus => true %></td>
-            </tr>
+          <tr>
+            <th align="center" valign="middle"><img src="/images/login.png"></th>
+            <td><%= f.email_field :email, :autofocus => true %></td>
+          </tr>
         </table>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <th width="20%" align="center">密碼</th>
-                <td width="80%"><%= f.password_field :password %></td>
-            </tr>
+          <tr>
+            <th align="center" valign="middle"><img src="/images/psw.png"></th>
+            <td><%= f.password_field :password %></td>
+          </tr>
         </table>
-        <a href="#" id="btnLogin">登入</a>
-        
+        <a href="#" title="登入" id="btnLogin"><img src="/images/into.png"></a> </div>
     </section>
     <% end %>
 </section>

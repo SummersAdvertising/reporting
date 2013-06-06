@@ -1,5 +1,6 @@
 # coding: utf-8
 class TicketsController < ApplicationController
+  before_filter :is_admin, :only => [:destroy]
   def index
     if(params[:order] == "createDESC")
       @tickets = Ticket.find(:all,

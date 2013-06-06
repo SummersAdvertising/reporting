@@ -1,5 +1,5 @@
 <% @tickets.each do |ticket| %>
-<div class="box<%= " highlight" if (ticket.priority == "high")%><%= " end" if (ticket.status == "close")%>">
+<div class="box<%= " highlight" if (ticket.priority == "high")%><%= " end" if (ticket.status == "close")%>" data-redirect="<%= ticket_path(ticket) %>" >
   <div class="avator">
     <div class="img-border"> <img src="/images/avator.jpg"> </div>
     <div class="name"><%= ticket.username %></div>
@@ -18,7 +18,7 @@
       <p><%= ticket.description %></p>
       <div class="cc"><% if ticket.cc != "null" && JSON.parse(ticket.cc).length>0 %>標記:
         <% User.find_all_by_id(JSON.parse(ticket.cc)).each do |cc| %>        
-        <a href="mailto:<%= cc.email %>"><%= cc.username %></a>
+        <a href="#"><%= cc.username %></a>
         <% end %> 
         ，<% end %> 共有<a href="<%= ticket_path(ticket) %>"><%= ticket.tracks.count(:conditions => ["status = ?", "track"]) %></a>則<a href="<%= ticket_path(ticket) %>">留言</a></div>
     </div>
@@ -27,3 +27,9 @@
 </div>
 <!--box-->
 <% end %>
+
+<script type="text/javascript">
+$("div.box").click(function(){
+  window.location = $(this).data("redirect");
+});
+</script>
