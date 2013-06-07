@@ -10,6 +10,10 @@ class TicketsController < ApplicationController
         when 'open' then 0
         else 1
         end),created_at ASC")
+    elsif(params[:order] == "recent")
+      @tickets = @recent
+    elsif(params[:order] == "newtrack")
+      @tickets = @newtrack
     else
       @tickets = Ticket.find(:all,
             :joins => "LEFT JOIN topics ON topics.id = tickets.topic_id LEFT JOIN users ON users.id = tickets.reporter" ,

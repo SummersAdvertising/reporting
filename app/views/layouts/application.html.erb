@@ -57,11 +57,11 @@
 
       <section id="topic">
         <h6>最新動態</h6>
-        <!-- <div class="ticket">
+        <div class="ticket">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="topic-name"><a href="#">近期回報</a></td>
-              <td class="notice"><span>2</span></td>
+              <td class="topic-name"><a href="/tickets?order=recent">近期回報</a></td>
+              <td class="notice"><span><%= @recent.count %></span></td>
             </tr>
           </table>
         </div>
@@ -69,11 +69,11 @@
         <div class="ticket">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="topic-name"><a href="#">最新留言</a></td>
-              <td class="notice"><span>1</span></td>
+              <td class="topic-name"><a href="/tickets?order=newtrack">最新留言</a></td>
+              <td class="notice"><span><%= @newtrack.count %></span></td>
             </tr>
           </table>
-        </div> -->
+        </div>
 
         <div class="ticket">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
