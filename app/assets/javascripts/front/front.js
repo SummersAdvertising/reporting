@@ -21,12 +21,23 @@ $(document).ready(function(){
 	})
 	
 	$('#aside-ctrl').click(function(){
-		$('aside').animate({left:0});
-		$('article').addClass('mask')
+		$('aside').animate({left:0}, function(){
+			$('article').addClass('mask');
+			$(document).click(function(){
+				$('aside').animate({left:-200});
+				$('article').removeClass('mask');
+				$(document).unbind();
+			});
+		});
 	})
 	
 	$('#tool-ctrl')	.click(function(){
-		$('#tool-list').fadeIn('slow');	
+		$('#tool-list').fadeIn('slow', function(){
+			$(document).click(function() {
+				$('#tool-list').fadeOut();
+				$(document).unbind();
+			});
+		});	
 	})
 
 	/* part2 */
