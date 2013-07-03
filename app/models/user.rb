@@ -12,5 +12,6 @@ class User < ActiveRecord::Base
   has_many :subscribes, :dependent => :destroy
   has_many :topics, :through => :subscribes
 
+  has_many :tickets
   has_many :tracks
 end

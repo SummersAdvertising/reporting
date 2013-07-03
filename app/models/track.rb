@@ -5,4 +5,11 @@ class Track < ActiveRecord::Base
   belongs_to :ticket
   belongs_to :user
   
+  before_create :send_message
+  
+  def send_message
+  	TrackMailer.delay.send_notify(self.ticket)
+  	#TrackMailer.send_notify(self.ticket).deliver
+  end
+  
 end

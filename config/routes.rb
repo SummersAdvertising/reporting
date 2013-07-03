@@ -27,6 +27,9 @@ Reporting::Application.routes.draw do
     
   end
 
+  #mount Resque::Server.new, :at => "/resque" 
+
+
   root :to => "tickets#index"
 
 end

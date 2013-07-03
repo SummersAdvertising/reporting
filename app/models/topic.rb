@@ -8,4 +8,16 @@ class Topic < ActiveRecord::Base
   has_many :users, :through => :subscribes
 
   has_many :tracks
+  
+  def get_user_emails
+  	
+  	mails = []
+  
+  	self.subscribes.each do | s |
+  		mails.push( s.user.email )
+  	end
+  	
+  	mails
+  end
+  
 end
