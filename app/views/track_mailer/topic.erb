@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<title>Track Notify</title>
+	</head>
+	<body>
+	<p>
+		您好,<br /> 
+		您追蹤的主題 <%= @topic.name %> 於 <%= Time.now %> 有了更新，<br />
+		<br />
+		請點此 <%= link_to @ticket.title, root_url + ticket_path(@ticket) %> 前往處理本次回報.<br />
+	</p>
+	
+	<p><%= @ticket.description %></p>
+	
+	<p>For test:
+	<br />
+	<%= image_tag attachments["avator.jpg"].url %>
+	<p>
+	
+	</body>
+</html>

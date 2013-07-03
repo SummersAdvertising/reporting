@@ -16,16 +16,16 @@ class TrackMailer < ActionMailer::Base
   	
   	user_ids.each do | user_id |
   		@user = User.find( user_id )
-  		user_mails.push( @user.email )
-  		
-  	Rails.logger.debug " **** Entering debug **** "
-  	Rails.logger.debug @user.email
-  	Rails.logger.debug " **** End **** "
+  		user_mails.push( @user.email )  		
   	end
   	
   	
   	mail( to: user_mails, subject: "[夏天回報系統] 收到了追蹤中主題的回報！" ) do | format |
-  		format.html { render 'notify' }
+  		format.html { render 'cc' }
+  	end
+  	
+  	mail( to: @topic.get_user_emails, subject: "[夏天回報系統] 收到了追蹤中主題的回報！" ) do | format |
+  		format.html { render 'topic' }
   	end
   end
   
