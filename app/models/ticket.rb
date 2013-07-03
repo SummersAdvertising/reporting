@@ -27,4 +27,5 @@ class Ticket < ActiveRecord::Base
     track.save
   end
   
+  
 end
