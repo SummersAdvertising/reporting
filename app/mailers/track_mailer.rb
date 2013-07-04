@@ -3,9 +3,9 @@ class TrackMailer < ActionMailer::Base
 
   default from: "adword@summers.com.tw"
   
-  def send_notify( ticket )
-  	@ticket = ticket
-  	@topic = ticket.topic
+  def send_notify( track )
+  	@ticket = track.ticket
+  	@topic = @ticket.topic
   	
   	attachments.inline['avator.jpg'] = File.read( 'public/images/avator.jpg' )
   	  	
@@ -14,10 +14,10 @@ class TrackMailer < ActionMailer::Base
   	end
   end
   
-  def send_cc
+  def send_cc( track )
   
-  	@ticket = ticket
-  	@topic = ticket.topic
+  	@ticket = track.ticket
+  	@topic = @ticket.topic
   	
   	attachments.inline['avator.jpg'] = File.read( 'public/images/avator.jpg' )
   	
