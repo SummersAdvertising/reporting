@@ -4,6 +4,7 @@ class TrackMailer < ActionMailer::Base
   default from: "adword@summers.com.tw"
   
   def send_notify( track )
+  	@track = track
   	@ticket = track.ticket
   	@topic = @ticket.topic
   	
@@ -15,7 +16,8 @@ class TrackMailer < ActionMailer::Base
   end
   
   def send_cc( track )
-  
+  	
+  	@track = track
   	@ticket = track.ticket
   	@topic = @ticket.topic
   	

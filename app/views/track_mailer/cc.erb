@@ -10,9 +10,11 @@
 		請點此 <%= link_to @ticket.title, root_url + ticket_path(@ticket) %> 前往處理本次回報.<br />
 	</p>
 	
-	<p><%= @ticket.description %></p>
+	<p>回報描述：<%= @ticket.description %></p>
 	
-	<p>For test:
+	<p>本次動態：<%= @track.comment %></p>
+	
+	<p>By:
 	<br />
 	<%= image_tag attachments["avator.jpg"].url %>
 	<p>
