@@ -5,7 +5,7 @@ class TrackMailer < ActionMailer::Base
   
   def send_notify( track )
   	@track = track
-  	@ticket = track.ticket
+  	@ticket = @track.ticket
   	@topic = @ticket.topic
   	
   	attachments.inline['avator.jpg'] = File.read( 'public/images/avator.jpg' )
@@ -18,8 +18,11 @@ class TrackMailer < ActionMailer::Base
   def send_cc( track )
   	
   	@track = track
-  	@ticket = track.ticket
+  	@ticket = @track.ticket
   	@topic = @ticket.topic
+  	
+  	
+  	return if @ticket.cc == "null"
   	
   	attachments.inline['avator.jpg'] = File.read( 'public/images/avator.jpg' )
   	
