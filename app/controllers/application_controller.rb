@@ -2,12 +2,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :check_authorization
-  before_filter :log
 
   def check_authorization
-    if (!user_signed_in?)
-    	redirect_to new_user_session_path
+    if(params[:controller] != "sessions")
+      record_login_redirect_path()
+    end
 
+    if (!user_signed_in?)
+    	redirect_to new_user_session_path(:redirect_to => session["user_return_to"] || params[:redirect_to])
     else
     	get_user_subscribe
       get_recent_tickets
@@ -72,9 +74,12 @@ class ApplicationController < ActionController::Base
     end   
   end
 
-  def log
-    #log
-    
+  def record_login_redirect_path
+    session["user_return_to"] = "#{request.fullpath}"
+  end
+
+  def after_sign_in_path_for(resource)
+    params[:redirect_to] || root_path
   end
 
 end

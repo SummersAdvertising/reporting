@@ -19,7 +19,7 @@
 <body>
 <section id="wrapper">
 <section id="vert">
-    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name,:redirect_to => params[:redirect_to])) do |f| %>
 	<section id="login">
          <h1>夏天廣告回報系統</h1>
       <div class="form">      

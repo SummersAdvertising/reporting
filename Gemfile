@@ -38,11 +38,6 @@ gem 'jquery-ui-rails'
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
-gem "redis"
-
-# gem "resque", :require => "resque/server"
-# gem "resque_mailer"
-
 gem "delayed_job"
 gem "delayed_job_active_record"
 
