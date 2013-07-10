@@ -23,8 +23,8 @@ article header{background:#272F3A;border-bottom:1px solid #1D212A;padding:14px 0
 header .tool,aside-ctrl{width:15%}
 #aside-ctrl a{position:relative;top:3px}
 #tool-ctrl{position:relative;top:2px}
-#tool-list{display:none;position:absolute;width:175px;top:60px;right:10px;background:#20BBD7;z-index:5;border-radius:5px;
-}
+#tool-list{display:none;position:absolute;width:175px;top:60px;right:10px;background:#20BBD7;
+z-index:5;border-radius:5px}
 #tool-list a{display:block;width:100%;height:55px;padding:15px 0 0 0;
 border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 #tool-list a:nth-child(1){border-top:none}
@@ -42,6 +42,10 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 /*-----------------------------------------------------------------------留言右欄---*/
 
 #msg-list .content{float:none;clear:both}
+#msg-list .text .tag{padding:0 0 10px 0}
+#msg-list .text{padding:10px}
+#msg-list .text p{font-size:12px}
+#msg-list .text .cc{padding:20px 0 0 0}
 #msg-list .text:before{background:url(../images/arr-top.png);width:28px;height:12px;top:-12px;right:12px}
 
 /*-----------------------------------------------------------------------發文---*/
@@ -50,6 +54,7 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 
 /*-----------------------------------------------------------------------原PO---*/
 
+#original-po .box{padding:19% 0 5% 0}
 #original-po .avator{display:none}
 #original-po .content{float:none;width:100%}
 #original-po .text p{font-size:13px}
@@ -59,9 +64,12 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 #msg-show .avator{text-align:center}
 #msg-show .box{width:95%;margin:20px auto}
 #msg-show .content{float:right;width:78%}
-#msg-show .text p{font-size:13px}
-#msg-show .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
-
+#msg-show .text{padding:10px}
+#msg-show .text p{font-size:12px}
+#msg-show .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:6px;left:-10px;
+-webkit-transform:scale(.6);
+-moz-transform:scale(.6);
+}
 #msg-show .img-border{width:39px;height:39px}
 #msg-show .img-border img{width:35px;height:35px}
 

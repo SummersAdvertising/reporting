@@ -32,6 +32,10 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 /*-----------------------------------------------------------------------留言右欄---*/
 
 #msg-list .content{float:right;width:78%}
+#msg-list .text .tag{padding:0 0 10px 0}
+#msg-list .text{padding:10px}
+#msg-list .text p{font-size:13px}
+#msg-list .text .cc{padding:20px 0 0 0}
 #msg-list .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
 
 /*-----------------------------------------------------------------------發文---*/
@@ -40,14 +44,19 @@ border-top:1px solid #36CBE6;border-bottom:1px solid #0CA5C1}
 
 /*-----------------------------------------------------------------------原PO---*/
 
+#original-po .box{padding:8% 0 5% 0}
 #original-po .text p{font-size:14px}
 
 /*-----------------------------------------------------------------------回覆---*/
 
 #msg-show .box{width:90%;margin:30px auto}
 #msg-show .content{float:right;width:78%}
-#msg-show .text p{font-size:14px}
-#msg-show .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
+#msg-show .text{padding:10px}
+#msg-show .text p{font-size:13px}
+#msg-show .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:6px;left:-11px;
+-webkit-transform:scale(.8);
+-moz-transform:scale(.8);
+}
 
 #msg-show .img-border{width:39px;height:39px}
 #msg-show .img-border img{width:35px;height:35px}

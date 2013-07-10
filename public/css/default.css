@@ -9,9 +9,7 @@ a{font:300 13px 微軟正黑體,"verdana";text-decoration:none;-webkit-text-size
 -moz-transition:all .5s ease}
 
 #wrapper{height:100%}
-body::-webkit-scrollbar { 
-    display: none; 
-}
+body::-webkit-scrollbar {display: none}
 
 /*-----------------------------------------------------------------------頁身---*/
 
@@ -57,16 +55,16 @@ div.highlight .time{
 #msg-list .time{color:#eee;border-radius:10px;font:300 11px 微軟正黑體,"verdana";
 padding:3px 2px 2px 20px;display:block;letter-spacing:1px;margin:0 0 5px 0;
 background:url(../images/time.png) 6px center no-repeat #272F3A;width:155px;text-shadow:0 -1px 0 #000}
-#msg-list .text{background:#fff;border:1px solid #222;border-radius:5px;padding:15px;position:relative}
+#msg-list .text{background:#fff;border:1px solid #222;border-radius:5px;position:relative}
 #msg-list .text:before{content:" ";display:block;position:absolute}
 
-#msg-list .text .tag{overflow:hidden;line-height:1.7em;padding:0 0 15px 0;font:300 12px 微軟正黑體,"verdana";}
+#msg-list .text .tag{overflow:hidden;line-height:1.7em;font:300 12px 微軟正黑體,"verdana";}
 #msg-list .text .tag li{float:left;text-align:center;background:#eaeaea;height:25px;
 border-radius:5px;padding:5px 10px 0 10px;margin:0 5px 0 0;color:#777;text-shadow:0 1px 0 #fff}
 #msg-list .text .tag .tag-topic{color:#fff;text-shadow:0 -1px 0 rgba(0,0,0,.5)}
 
-#msg-list .text p{padding:0;color:#222;font:300 14px 微軟正黑體,"verdana";line-height:1.7em}
-#msg-list .text .cc{text-align:right;padding:30px 0 0 0;color:#aaa;font:italic 300 11px 微軟正黑體,"verdana"}
+#msg-list .text p{padding:0;color:#222;font-width:300;font-family:微軟正黑體,"verdana";line-height:1.7em}
+#msg-list .text .cc{text-align:right;color:#aaa;font:italic 300 11px 微軟正黑體,"verdana"}
 #msg-list .text .cc a{color:#20BBD7;font:italic 300 11px 微軟正黑體,"verdana";margin:0 3px}
 #msg-list .text .cc a:hover{text-decoration:underline}
 
@@ -114,16 +112,14 @@ border-top:1px solid #1B1F24;border-bottom:1px solid #91979E}
 
 /*-----------------------------------------------------------------------回覆右欄---*/
 
-#msg-show .text{background:#fff;border:1px solid #222;border-radius:5px;padding:15px;position:relative}
+#msg-show .text{background:#fff;border:1px solid #222;border-radius:5px;position:relative}
 #msg-show .text:before{content:" ";display:block;position:absolute}
-#msg-show .text p{padding:0;color:#222;font:300 14px 微軟正黑體,"verdana";line-height:1.7em}
+#msg-show .text p{color:#222;font-width:300;font-family:微軟正黑體,"verdana";line-height:1.7em}
 #msg-show .time{display:none}
 
 /*-----------------------------------------------------------------------功能---*/
 
-#original-po{
-background:#333A42;border-bottom:1px solid #1D212A;	box-shadow: inset 0 0 10px #1D212A;
-position:relative}
+#original-po{background:#333A42;border-bottom:1px solid #1D212A;box-shadow: inset 0 0 10px #1D212A;position:relative}
 #original-po .tool{position:absolute;right:10px;top:15px}
 #original-po .tool a{display:inline-block!important;width:25px;height:25px;background:url(../images/list.jpg) 0 bottom repeat-x;
 margin:0 auto;border-radius:50%;padding:4px 0 0 0;margin:0 5px;border:1px solid #333A42;text-align:center}
@@ -135,7 +131,7 @@ margin:0 auto;border-radius:50%;padding:4px 0 0 0;margin:0 5px;border:1px solid 
 
 /*-----------------------------------------------------------------------原PO---*/
 
-#original-po .box{overflow:hidden;width:90%;max-width:800px;margin:0 auto;padding:5% 0}
+#original-po .box{overflow:hidden;width:90%;max-width:800px;margin:0 auto}
 #original-po .text{text-shadow:0 -1px 0 #1D212A;font:300 15px 微軟正黑體,"verdana";line-height:1.7em}
 #original-po .tag{overflow:hidden;line-height:1.7em;padding:0 0 15px 0;font:300 12px 微軟正黑體,"verdana";}
 #original-po .cc{padding:30px 0 0 0}
@@ -152,7 +148,6 @@ border-radius:5px;padding:5px 10px 0 10px;margin:0 5px 0 0;color:#777;text-shado
 #original-po .content .cc a,
 #original-po .content .deadline a{color:#20BBD7;font:300 11px 微軟正黑體,"verdana";margin:0 3px}
 #original-po .content .cc a:hover{text-decoration:underline}
-
 
 /*-----------------------------------------------------------------------編輯---*/
 

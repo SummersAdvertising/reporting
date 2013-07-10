@@ -24,7 +24,8 @@ header .tool{width:350px;text-align:right}
 /*-----------------------------------------------------------------------留言---*/
 
 #msg-list{border-top:1px solid #878E94}
-#msg-list .box{width:90%;max-width:600px;margin:25px}
+#msg-list .box{width:90%;margin:25px}
+@media screen and (min-width: 1339px){#msg-list .box{max-width:45%}}
 
 /*-----------------------------------------------------------------------留言左欄---*/
 
@@ -35,15 +36,21 @@ header .tool{width:350px;text-align:right}
 /*-----------------------------------------------------------------------留言右欄---*/
 
 #msg-list .content{float:right;width:78%}
+#msg-list .text .tag{padding:0 0 15px 0}
+#msg-list .text{padding:15px}
+#msg-list .text p{font-size:14px}
+#msg-list .text .cc{padding:30px 0 0 0}
 #msg-list .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
 
 /*-----------------------------------------------------------------------留言發文---*/
 
-#msg-list #post{width:90%;max-width:575px;margin:25px 25px 25px 50px;
+#msg-list #post{width:87%;margin:25px 25px 25px 50px;
 border:1px solid #222;border-radius:5px;padding:10px;float:left}
+@media screen and (min-width: 1339px){#msg-list #post{max-width:43%}}
 
 /*-----------------------------------------------------------------------原PO---*/
 
+#original-po .box{padding:5% 0}
 #original-po .text p{font-size:15px}
 
 /*-----------------------------------------------------------------------回覆發文---*/
@@ -54,9 +61,10 @@ border:1px solid #222;border-radius:5px;padding:10px;clear:both;position:relativ
 
 /*-----------------------------------------------------------------------回覆---*/
 
-#msg-show .box{width:90%;max-width:650px;margin:40px auto}
+#msg-show .box{width:90%;max-width:550px;margin:40px auto}
 #msg-show .content{float:right;width:78%}
-#msg-show .text p{font-size:15px}
+#msg-show .text{padding:15px}
+#msg-show .text p{font-size:14px}
 #msg-show .text:before{background:url(../images/arr-left.png);width:12px;height:28px;top:12px;left:-12px}
 
 #msg-show .img-border{width:49px;height:49px}
